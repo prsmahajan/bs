@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-bg text-white font-sans antialiased;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  .glass-strong {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+  }
+}

@@ -1,16 +1,131 @@
-# React + Vite
+# AI Bharat Health Mission 2026 - Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, cinematic landing page for the AI Bharat Health Mission 2026 event.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Sticky Animated Header**: Logo groups, navigation links, and CTAs with scroll-based animations
+- **Cinematic Hero Section**: Full-screen Wistia video background with animated AI SVG overlay
+- **Scroll Animations**: Smooth Framer Motion animations triggered on viewport entry
+- **Dark Premium Design**: Modern, tech-event aesthetic with glass morphism effects
+- **Fully Responsive**: Optimized for all screen sizes
+- **Accessible**: High contrast, semantic HTML, keyboard navigation support
+- **Sections**:
+  - About Event
+  - Theme
+  - Why Attend
+  - What to Expect
+  - AI Diagnosis Showdown
+  - Partnerships
+  - Registration Form
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React**: UI framework
+- **Vite**: Build tool and dev server
+- **Tailwind CSS**: Utility-first styling
+- **Framer Motion**: Animation library
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 16+ and npm
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+The development server will start at `http://localhost:5173/`
+
+## Project Structure
+
+```
+ai-bharat-health/
+├── public/
+│   └── logos/           # BioSpectrum and AI Spectrum logos
+├── src/
+│   ├── App.jsx          # Main application with all components
+│   ├── App.css          # Minimal CSS (using Tailwind)
+│   ├── index.css        # Tailwind directives and custom utilities
+│   └── main.jsx         # React entry point
+├── index.html           # HTML template
+├── tailwind.config.js   # Tailwind configuration
+└── vite.config.js       # Vite configuration
+```
+
+## Component Overview
+
+### Header
+- Animated sticky header with blur backdrop
+- Logo groups (BioSpectrum, AI Spectrum)
+- Navigation with animated underlines
+- CTA buttons
+
+### Hero
+- Wistia video background (autoplay, muted, looping)
+- Animated AI SVG with floating motion
+- Gradient title text
+- Primary CTA button
+
+### Content Sections
+All sections feature:
+- Scroll-triggered animations
+- Glass morphism cards
+- Gradient accent colors
+- Responsive layouts
+
+### Registration Form
+- Name, email, company, and role fields
+- Form validation
+- Animated submit button
+- (Demo mode - no backend)
+
+## Customization
+
+### Colors
+Edit `tailwind.config.js` to customize the color scheme:
+
+```js
+colors: {
+  'dark-bg': '#0a0a1a',
+  'dark-card': '#1a1a2e',
+  'accent-purple': '#8b5cf6',
+  'accent-blue': '#3b82f6',
+}
+```
+
+### Animations
+Modify Framer Motion props in `App.jsx` to adjust animation timings and effects.
+
+### Video Background
+Replace the Wistia embed URL in the Hero component to use a different video.
+
+## Performance Notes
+
+- Video background is optimized with pointer-events: none
+- Animations use GPU-accelerated properties
+- Lazy loading for viewport-triggered animations
+- Minimal JavaScript bundle size
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+
+## License
+
+This is a demonstration project for AI Bharat Health Mission 2026.

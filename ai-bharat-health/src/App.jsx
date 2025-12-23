@@ -59,13 +59,7 @@ function Header({ scrolled }) {
             <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
               Powered by
             </span>
-            <img src="/logos/biospectrum.svg" alt="BioSpectrum" className="h-7" />
-          </div>
-          <div className="hidden lg:flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
-              Co-Partner
-            </span>
-            <img src="/logos/aispectrum.svg" alt="AI Spectrum" className="h-7" />
+            <img src="/logos/biospectrumasia.webp" alt="BioSpectrum" className="h-13 w-40" />
           </div>
         </div>
 
@@ -75,7 +69,7 @@ function Header({ scrolled }) {
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium transition-colors group"
+              className="relative text-md font-medium transition-colors group nav"
               style={{ color: 'var(--muted)' }}
             >
               {link.label}
@@ -105,7 +99,7 @@ function Header({ scrolled }) {
         </div>
       </div>
     </motion.header>
-  )
+        )
 }
 
 function Hero() {
@@ -138,10 +132,10 @@ function Hero() {
       {/* Video Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <iframe
-          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=1&controlsVisibleOnLoad=0&playbar=0&volume=0&endVideoBehavior=loop"
+          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
           allow="autoplay; fullscreen"
           allowFullScreen
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 brightness-125"
           style={{
             width: '120vw',
             height: '120vh',
@@ -149,12 +143,12 @@ function Hero() {
           }}
         />
         {/* Heavy gradient overlays */}
-        <div
+        {/* <div
           className="absolute inset-0"
           style={{
             background: 'radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,166,81,0.08) 0%, transparent 50%), linear-gradient(180deg, #071225 0%, rgba(11,27,58,0.95) 40%, rgba(11,27,58,0.98) 100%)'
           }}
-        />
+        /> */}
       </div>
 
       {/* Geometric Lattice Overlay (right side) */}
@@ -223,11 +217,11 @@ function Hero() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] mb-6">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-[1.1] mb-6">
             <span className="font-serif italic font-normal" style={{ color: 'var(--muted)' }}>
               Where{' '}
             </span>
-            <span className="font-black" style={{ color: 'var(--text)' }}>
+            <span className="font-bold" style={{ color: 'var(--text)' }}>
               health leaders
               <br />
               and AI{' '}
@@ -236,7 +230,7 @@ function Hero() {
               converge
             </span>
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-xl" style={{ color: 'var(--muted)' }}>
+          <p className="text-lg md:text-xl mb-8 max-w-xl tit" style={{ color: 'var(--muted)' }}>
             The global platform for deal-making, ROI impact and visibility in healthcare AI.
           </p>
           <motion.a
@@ -278,12 +272,12 @@ function Hero() {
           >
             <div className="flex items-baseline gap-4 mb-6">
               <div className="text-6xl font-black text-gradient-green">2026</div>
-              <div className="text-xl font-light" style={{ color: 'var(--muted)' }}>India</div>
+              <div className="text-2xl font-bold" style={{ color: 'var(--muted)' }}>India</div>
             </div>
 
             <div className="space-y-3 mb-8">
-              <div className="text-sm font-medium" style={{ color: 'var(--muted)' }}>
-                8 & 9 July 2026
+              <div className="text-md font-medium tit" style={{ color: '#eee' }}>
+               17 April 2026
               </div>
               <div className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
                 Location TBA

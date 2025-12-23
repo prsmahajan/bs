@@ -3,7 +3,23 @@
 /* Clarion Custom Font */
 @font-face {
   font-family: 'Clarion';
-  src: url('/fonts/clarion.ttf') format('truetype');
+  src: url('../public/fonts/clarion.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Waldenburg';
+  src: url('../public/fonts/waldenburg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../public/fonts/Inter.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -19,13 +35,13 @@
     --navy: #0B1B3A;
     --surface: rgba(255, 255, 255, 0.06);
     --stroke: rgba(255, 255, 255, 0.14);
-    --text: rgba(255, 255, 255, 0.92);
-    --muted: rgba(255, 255, 255, 0.70);
-    --accent: #00A651;
+    --text: rgba(255, 255, 255, 0.951);
+    --muted: rgb(255, 253, 253);
+    --accent: #f24025;
     --accent2: #2BD576;
     --highlight: rgba(0, 166, 81, 0.35);
-    --btn-red: #D81617;
-    --btn-red-glow: rgba(216, 22, 23, 0.4);
+    --btn-red: #f61b1b;
+    --btn-red-glow: rgba(247, 33, 33, 0.942);
   }
 
   html {
@@ -58,14 +74,14 @@
   }
 
   .text-gradient-green {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    background: linear-gradient(135deg, #eee 0%, #555 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .btn-primary {
-    background: rgba(216, 22, 23, 0.15);
+    background: rgba(216, 22, 22, 0.984);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(216, 22, 23, 0.4);
     color: white;
@@ -87,13 +103,21 @@
   }
 
   .btn-primary:hover {
-    background: rgba(216, 22, 23, 0.25);
+    background: rgba(216, 22, 22, 0.984);
     border-color: rgba(216, 22, 23, 0.6);
-    box-shadow: 0 0 32px var(--btn-red-glow), 0 4px 20px rgba(216, 22, 23, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 32px var(--btn-red-glow), 0 4px 10px rgba(216, 22, 23, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     transform: translateY(-2px);
   }
 
   .btn-primary:hover::before {
     opacity: 0.5;
+  }
+
+  .nav {
+    font-family: Waldenburg, sans-serif;
+  }
+  
+  .tit{
+    font-family: Inter, sans-serif;
   }
 }

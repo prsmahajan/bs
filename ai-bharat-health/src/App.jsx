@@ -42,14 +42,14 @@ function Header({ scrolled }) {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'glass-strong py-3 border-b border-white/10'
+          ? 'py-3 border-b border-white/90'
           : 'py-4'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       style={{
-        backdropFilter: scrolled ? 'blur(32px)' : 'blur(8px)',
+        backdropFilter: scrolled ? 'blur(5px)' : 'blur(8px)',
       }}
     >
       <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between">
@@ -74,7 +74,7 @@ function Header({ scrolled }) {
             >
               {link.label}
               <span
-                className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
+                className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-300 group-hover:w-full"
                 style={{ background: 'var(--accent)' }}
               />
             </a>
@@ -85,14 +85,14 @@ function Header({ scrolled }) {
         <div className="flex items-center gap-3">
           <a
             href="#partner"
-            className="glass px-5 py-2 text-sm font-medium rounded-full hover:border-accent/40 transition-all duration-300"
+            className="glass px-5 py-4 text-sm font-medium rounded-lg transition-all duration-300 jakarta"
             style={{ color: 'var(--text)' }}
           >
             Be our partner!
           </a>
           <a
             href="#register"
-            className="btn-primary px-6 py-2 text-sm font-bold text-white rounded-full"
+            className="btn-primary px-6 py-4 text-sm font-bold text-white rounded-lg"
           >
             Register now
           </a>
@@ -142,17 +142,10 @@ function Hero() {
             border: 'none',
           }}
         />
-        {/* Heavy gradient overlays */}
-        {/* <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,166,81,0.08) 0%, transparent 50%), linear-gradient(180deg, #071225 0%, rgba(11,27,58,0.95) 40%, rgba(11,27,58,0.98) 100%)'
-          }}
-        /> */}
       </div>
 
       {/* Geometric Lattice Overlay (right side) */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-10 overflow-hidden">
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-10 overflow-hidden opacity-70">
         <svg
           className="absolute right-0 top-1/2 -translate-y-1/2 w-full h-full opacity-[0.08]"
           viewBox="0 0 400 600"
@@ -169,7 +162,7 @@ function Hero() {
       </div>
 
       {/* Giant AI Watermark */}
-      <motion.div
+      {/* <motion.div
         className="absolute right-[5%] top-1/2 -translate-y-1/2 z-10 pointer-events-none select-none"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
@@ -208,7 +201,7 @@ function Hero() {
             </linearGradient>
           </defs>
         </svg>
-      </motion.div>
+      </motion.div> */}
 
       <div className="relative z-20 max-w-[1440px] mx-auto px-8 w-full grid lg:grid-cols-2 gap-12 items-center">
         {/* Left: Hero Content */}
@@ -235,7 +228,7 @@ function Hero() {
           </p>
           <motion.a
             href="#register"
-            className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-full"
+            className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-md"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -270,34 +263,27 @@ function Hero() {
               ease: 'easeInOut',
             }}
           >
-            <div className="flex items-baseline gap-4 mb-6">
-              <div className="text-6xl font-black text-gradient-green">2026</div>
-              <div className="text-2xl font-bold" style={{ color: 'var(--muted)' }}>India</div>
-            </div>
-
-            <div className="space-y-3 mb-8">
-              <div className="text-md font-medium tit" style={{ color: '#eee' }}>
-               17 April 2026
+            <div className="flex flex-col items-baseline gap-4 mb-28">
+              <div className="text-5xl font-medium jakarta" style={{ color: '#eee' }}>
+               17 April 2026,
               </div>
-              <div className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
-                Location TBA
-              </div>
+              <div className="text-3xl font-medium jakarta">Taj, MG Road, Bengaluru</div>
             </div>
 
             <div className="space-y-3">
               <motion.a
                 href="#register"
-                className="btn-primary block w-full text-center px-6 py-4 text-base font-bold text-white rounded-2xl"
-                whileHover={{ scale: 1.02 }}
+                className="btn-primary block w-full text-center px-6 py-4 text-base font-bold text-white rounded-md"
+                whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.98 }}
               >
                 Register now
               </motion.a>
               <motion.a
                 href="#partner"
-                className="glass block w-full text-center px-6 py-4 text-base font-semibold rounded-2xl hover:border-accent/40 transition-all group"
+                className="glass block w-full text-center px-6 py-4 text-base font-semibold rounded-md hover:border-white transition-all group jakarta"
                 style={{ color: 'var(--text)' }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.00 }}
                 whileTap={{ scale: 0.98 }}
               >
                 Be our partner <span className="inline-block transition-transform group-hover:translate-x-1">↗</span>

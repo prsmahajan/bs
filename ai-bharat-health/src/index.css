@@ -1,26 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --ink: #071225;
+    --navy: #0B1B3A;
+    --surface: rgba(255, 255, 255, 0.06);
+    --stroke: rgba(255, 255, 255, 0.14);
+    --text: rgba(255, 255, 255, 0.92);
+    --muted: rgba(255, 255, 255, 0.70);
+    --accent: #00A651;
+    --accent2: #2BD576;
+    --highlight: rgba(0, 166, 81, 0.35);
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-dark-bg text-white font-sans antialiased;
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+    background: var(--surface);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--stroke);
   }
 
   .glass-strong {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+  }
+
+  .text-gradient-green {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    box-shadow: 0 0 24px var(--highlight);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 32px var(--highlight), 0 4px 16px rgba(0, 166, 81, 0.2);
+    transform: translateY(-2px);
   }
 }

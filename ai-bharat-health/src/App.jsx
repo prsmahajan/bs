@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import './App.css'
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
-  const { scrollY } = useScroll()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,7 +14,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
       <Header scrolled={scrolled} />
       <Hero />
       <About />
@@ -44,50 +43,62 @@ function Header({ scrolled }) {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'glass-strong py-3 border-b border-white/10'
-          : 'bg-transparent backdrop-blur-sm py-4'
+          : 'py-4'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
+      style={{
+        backdropFilter: scrolled ? 'blur(32px)' : 'blur(8px)',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between">
         {/* Left: Logos */}
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 uppercase tracking-wide">Powered by</span>
-            <img src="/logos/biospectrum.svg" alt="BioSpectrum" className="h-8" />
+            <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
+              Powered by
+            </span>
+            <img src="/logos/biospectrum.svg" alt="BioSpectrum" className="h-7" />
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 uppercase tracking-wide">Co-Partner</span>
-            <img src="/logos/aispectrum.svg" alt="AI Spectrum" className="h-8" />
+          <div className="hidden lg:flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
+              Co-Partner
+            </span>
+            <img src="/logos/aispectrum.svg" alt="AI Spectrum" className="h-7" />
           </div>
         </div>
 
         {/* Center: Nav Links */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden xl:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group"
+              className="relative text-sm font-medium transition-colors group"
+              style={{ color: 'var(--muted)' }}
             >
               {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent-purple transition-all duration-300 group-hover:w-full" />
+              <span
+                className="absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full"
+                style={{ background: 'var(--accent)' }}
+              />
             </a>
           ))}
         </nav>
 
         {/* Right: CTAs */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <a
             href="#partner"
-            className="px-4 py-2 text-sm font-medium text-white border border-white/20 rounded-full hover:bg-white/10 transition-all duration-300"
+            className="glass px-5 py-2 text-sm font-medium rounded-full hover:border-accent/40 transition-all duration-300"
+            style={{ color: 'var(--text)' }}
           >
             Be our partner!
           </a>
           <a
             href="#register"
-            className="px-6 py-2 text-sm font-medium text-white bg-gradient-to-r from-accent-purple to-accent-blue rounded-full hover:shadow-lg hover:shadow-accent-purple/50 transition-all duration-300"
+            className="btn-primary px-6 py-2 text-sm font-bold text-white rounded-full"
           >
             Register now
           </a>
@@ -98,47 +109,91 @@ function Header({ scrolled }) {
 }
 
 function Hero() {
+  const cardRef = useRef(null)
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 })
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 })
+
+  const rotateX = useTransform(springY, [-300, 300], [5, -5])
+  const rotateY = useTransform(springX, [-300, 300], [-5, 5])
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!cardRef.current) return
+      const rect = cardRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      mouseX.set(e.clientX - centerX)
+      mouseY.set(e.clientY - centerY)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
+
   return (
-    <section className="relative h-screen flex items-end pb-20 overflow-hidden">
-      {/* Wistia Video Background */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <iframe
           src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=1&controlsVisibleOnLoad=0&playbar=0&volume=0&endVideoBehavior=loop"
           allow="autoplay; fullscreen"
           allowFullScreen
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20"
           style={{
             width: '120vw',
             height: '120vh',
             border: 'none',
           }}
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/70 via-dark-bg/50 to-dark-bg" />
+        {/* Heavy gradient overlays */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,166,81,0.08) 0%, transparent 50%), linear-gradient(180deg, #071225 0%, rgba(11,27,58,0.95) 40%, rgba(11,27,58,0.98) 100%)'
+          }}
+        />
       </div>
 
-      {/* Animated AI SVG Background */}
+      {/* Geometric Lattice Overlay (right side) */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-10 overflow-hidden">
+        <svg
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-full h-full opacity-[0.08]"
+          viewBox="0 0 400 600"
+          fill="none"
+          preserveAspectRatio="xMaxYMid slice"
+        >
+          <defs>
+            <pattern id="lattice" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M0 0L40 40M40 0L0 40" stroke="white" strokeWidth="0.5" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="600" fill="url(#lattice)" transform="rotate(15 200 300)" />
+        </svg>
+      </div>
+
+      {/* Giant AI Watermark */}
       <motion.div
-        className="absolute right-[10%] top-1/2 -translate-y-1/2 z-10 pointer-events-none select-none"
+        className="absolute right-[5%] top-1/2 -translate-y-1/2 z-10 pointer-events-none select-none"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
-          opacity: [0.1, 0.15, 0.1],
-          scale: [1, 1.05, 1],
-          y: [-20, 20, -20],
+          opacity: [0.08, 0.12, 0.08],
+          scale: [1, 1.02, 1],
+          y: [-10, 10, -10],
         }}
         transition={{
-          duration: 8,
+          duration: 10,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
       >
         <svg
-          width="500"
-          height="500"
+          width="600"
+          height="600"
           viewBox="0 0 200 200"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full"
         >
           <text
             x="50%"
@@ -148,42 +203,113 @@ function Hero() {
             fontSize="140"
             fontWeight="900"
             fill="url(#aiGrad)"
-            opacity="0.15"
+            style={{ filter: 'drop-shadow(0 0 40px rgba(0,166,81,0.3))' }}
           >
             AI
           </text>
           <defs>
             <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: '#8b5cf6' }} />
-              <stop offset="100%" style={{ stopColor: '#3b82f6' }} />
+              <stop offset="0%" style={{ stopColor: '#00A651' }} />
+              <stop offset="100%" style={{ stopColor: '#2BD576' }} />
             </linearGradient>
           </defs>
         </svg>
       </motion.div>
 
-      {/* Hero Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6">
+      <div className="relative z-20 max-w-[1440px] mx-auto px-8 w-full grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left: Hero Content */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-8 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
-            AI Bharat Health
-            <br />
-            Mission 2026
+          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] mb-6">
+            <span className="font-serif italic font-normal" style={{ color: 'var(--muted)' }}>
+              Where{' '}
+            </span>
+            <span className="font-black" style={{ color: 'var(--text)' }}>
+              health leaders
+              <br />
+              and AI{' '}
+            </span>
+            <span className="font-serif italic font-normal text-gradient-green">
+              converge
+            </span>
           </h1>
+          <p className="text-lg md:text-xl mb-8 max-w-xl" style={{ color: 'var(--muted)' }}>
+            The global platform for deal-making, ROI impact and visibility in healthcare AI.
+          </p>
           <motion.a
             href="#register"
-            className="inline-block px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-accent-purple to-accent-blue rounded-full hover:shadow-2xl hover:shadow-accent-purple/50 transition-all duration-300"
+            className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Register now
           </motion.a>
+        </motion.div>
+
+        {/* Right: Floating Glass Card */}
+        <motion.div
+          ref={cardRef}
+          className="hidden lg:flex justify-end"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <motion.div
+            className="glass-strong rounded-3xl p-8 w-full max-w-md"
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: 'preserve-3d',
+            }}
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            <div className="flex items-baseline gap-4 mb-6">
+              <div className="text-6xl font-black text-gradient-green">2026</div>
+              <div className="text-xl font-light" style={{ color: 'var(--muted)' }}>India</div>
+            </div>
+
+            <div className="space-y-3 mb-8">
+              <div className="text-sm font-medium" style={{ color: 'var(--muted)' }}>
+                8 & 9 July 2026
+              </div>
+              <div className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
+                Location TBA
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <motion.a
+                href="#register"
+                className="btn-primary block w-full text-center px-6 py-4 text-base font-bold text-white rounded-2xl"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Register now
+              </motion.a>
+              <motion.a
+                href="#partner"
+                className="glass block w-full text-center px-6 py-4 text-base font-semibold rounded-2xl hover:border-accent/40 transition-all group"
+                style={{ color: 'var(--text)' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Be our partner <span className="inline-block transition-transform group-hover:translate-x-1">↗</span>
+              </motion.a>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -200,8 +326,10 @@ function About() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-6">About the Event</h2>
-        <p className="text-xl text-gray-300 leading-relaxed">
+        <h2 className="text-5xl md:text-6xl font-black mb-8" style={{ color: 'var(--text)' }}>
+          About the Event
+        </h2>
+        <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
           Join us for the premier AI healthcare event of 2026. Bringing together visionaries,
           researchers, and industry leaders to shape the future of healthcare in India through
           artificial intelligence and cutting-edge technology.
@@ -213,26 +341,28 @@ function About() {
 
 function Theme() {
   return (
-    <Section id="theme" className="py-32 bg-gradient-to-b from-transparent to-dark-card/30">
+    <Section id="theme" className="py-32">
       <motion.div
-        className="max-w-4xl mx-auto text-center"
+        className="max-w-5xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-6">
-          <span className="bg-gradient-to-r from-accent-purple to-accent-blue bg-clip-text text-transparent">
-            Theme
-          </span>
-        </h2>
-        <p className="text-2xl text-gray-200 font-light leading-relaxed mb-8">
-          "AI-Powered Healthcare for Bharat"
-        </p>
-        <p className="text-lg text-gray-300 leading-relaxed">
-          Exploring how artificial intelligence can democratize healthcare access, improve
-          diagnostics, and create sustainable health solutions for over a billion people.
-        </p>
+        <div className="glass-strong rounded-3xl p-12 md:p-16 text-center">
+          <div className="inline-block mb-6 px-6 py-2 glass rounded-full">
+            <span className="text-sm font-semibold uppercase tracking-wider text-gradient-green">
+              2026 Theme
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-gradient-green">
+            AI-Powered Healthcare for Bharat
+          </h2>
+          <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto" style={{ color: 'var(--muted)' }}>
+            Exploring how artificial intelligence can democratize healthcare access, improve
+            diagnostics, and create sustainable health solutions for over a billion people.
+          </p>
+        </div>
       </motion.div>
     </Section>
   )
@@ -242,19 +372,19 @@ function Why() {
   const reasons = [
     {
       title: 'Network with Leaders',
-      description: 'Connect with top AI researchers, healthcare innovators, and policy makers.',
+      description: 'Connect with top AI researchers, healthcare innovators, and policy makers shaping the future of health tech.',
     },
     {
       title: 'Learn from Experts',
-      description: 'Gain insights from keynotes, workshops, and hands-on sessions.',
+      description: 'Gain insights from keynotes, workshops, and hands-on sessions led by industry pioneers.',
     },
     {
       title: 'Showcase Innovation',
-      description: 'Present your AI healthcare solutions to industry leaders and investors.',
+      description: 'Present your AI healthcare solutions to industry leaders, investors, and potential partners.',
     },
     {
       title: 'Shape the Future',
-      description: 'Contribute to the national conversation on AI in healthcare.',
+      description: 'Contribute to the national conversation on AI in healthcare and influence policy direction.',
     },
   ]
 
@@ -267,22 +397,27 @@ function Why() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-16 text-center">Why Attend</h2>
-        <div className="grid md:grid-cols-2 gap-8">
+        <h2 className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
+          Why Attend
+        </h2>
+        <div className="grid md:grid-cols-2 gap-6">
           {reasons.map((reason, index) => (
             <motion.div
               key={index}
-              className="glass p-8 rounded-2xl hover:glass-strong transition-all duration-300"
+              className="glass rounded-2xl p-8 hover:glass-strong transition-all duration-300 group"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ y: -4 }}
             >
-              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-accent-purple to-accent-blue bg-clip-text text-transparent">
+              <div className="w-12 h-1 bg-gradient-to-r from-accent to-accent2 rounded-full mb-6" />
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--text)' }}>
                 {reason.title}
               </h3>
-              <p className="text-gray-300 leading-relaxed">{reason.description}</p>
+              <p className="leading-relaxed" style={{ color: 'var(--muted)' }}>
+                {reason.description}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -297,33 +432,37 @@ function Expect() {
     'Live demonstrations of AI diagnostic tools',
     'Panel discussions on policy and ethics',
     'Networking sessions with industry leaders',
-    'Startup pitch competition',
-    'Hands-on AI workshops',
+    'Startup pitch competition with investor panels',
+    'Hands-on AI workshops and masterclasses',
+    'Exhibition hall featuring latest health tech',
+    'One-on-one mentorship opportunities',
   ]
 
   return (
-    <Section id="expect" className="py-32 bg-gradient-to-b from-dark-card/30 to-transparent">
+    <Section id="expect" className="py-32">
       <motion.div
-        className="max-w-5xl mx-auto"
+        className="max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-16 text-center">What to Expect</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h2 className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
+          What to Expect
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {highlights.map((item, index) => (
             <motion.div
               key={index}
-              className="glass p-6 rounded-xl"
+              className="glass rounded-xl p-6 hover:border-accent/30 transition-all duration-300"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
             >
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-accent-purple rounded-full mt-2 flex-shrink-0" />
-                <p className="text-gray-200">{item}</p>
+                <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ background: 'var(--accent)' }} />
+                <p style={{ color: 'var(--text)' }}>{item}</p>
               </div>
             </motion.div>
           ))}
@@ -337,36 +476,47 @@ function Showdown() {
   return (
     <Section id="showdown" className="py-32">
       <motion.div
-        className="max-w-4xl mx-auto"
+        className="max-w-5xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <div className="glass-strong p-12 rounded-3xl text-center border-2 border-accent-purple/30">
-          <motion.div
-            className="inline-block mb-6"
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <span className="text-6xl">🏆</span>
-          </motion.div>
-          <h2 className="text-5xl md:text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-accent-purple to-accent-blue bg-clip-text text-transparent">
-              AI Diagnosis Showdown
-            </span>
-          </h2>
-          <p className="text-xl text-gray-200 leading-relaxed mb-8">
-            Watch leading AI diagnostic systems compete in real-time challenges. See cutting-edge
-            technology solve complex medical cases and push the boundaries of what's possible in
-            AI-powered healthcare.
-          </p>
-          <a
-            href="#register"
-            className="inline-block px-8 py-3 font-bold text-white bg-gradient-to-r from-accent-purple to-accent-blue rounded-full hover:shadow-xl hover:shadow-accent-purple/50 transition-all duration-300"
-          >
-            Witness the Future
-          </a>
+        <div className="glass-strong rounded-3xl p-12 md:p-16 text-center relative overflow-hidden">
+          {/* Glow effect */}
+          <div
+            className="absolute inset-0 opacity-20 blur-3xl"
+            style={{ background: 'radial-gradient(circle at center, var(--accent) 0%, transparent 70%)' }}
+          />
+
+          <div className="relative z-10">
+            <motion.div
+              className="inline-block mb-8 text-7xl"
+              animate={{
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              🏆
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6">
+              <span className="text-gradient-green">AI Diagnosis Showdown</span>
+            </h2>
+            <p className="text-xl leading-relaxed mb-10 max-w-3xl mx-auto" style={{ color: 'var(--muted)' }}>
+              Watch leading AI diagnostic systems compete in real-time challenges. See cutting-edge
+              technology solve complex medical cases and push the boundaries of what's possible in
+              AI-powered healthcare.
+            </p>
+            <motion.a
+              href="#register"
+              className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-full"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Witness the Future
+            </motion.a>
+          </div>
         </div>
       </motion.div>
     </Section>
@@ -375,27 +525,42 @@ function Showdown() {
 
 function Partner() {
   return (
-    <Section id="partner" className="py-32 bg-gradient-to-b from-transparent to-dark-card/30">
+    <Section id="partner" className="py-32">
       <motion.div
-        className="max-w-3xl mx-auto text-center"
+        className="max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-6">Partnerships</h2>
-        <p className="text-xl text-gray-300 leading-relaxed mb-10">
-          Join us as a partner and be part of India's largest AI healthcare initiative. Connect
-          with innovators, showcase your brand, and contribute to transforming healthcare.
-        </p>
-        <motion.a
-          href="mailto:partnerships@aibharathealth.org"
-          className="inline-block px-10 py-4 text-lg font-bold text-white border-2 border-accent-purple rounded-full hover:bg-accent-purple transition-all duration-300"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Become a Partner
-        </motion.a>
+        <div className="glass-strong rounded-3xl p-12 md:p-16 text-center">
+          <h2 className="text-5xl md:text-6xl font-black mb-8" style={{ color: 'var(--text)' }}>
+            Partnerships
+          </h2>
+          <p className="text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: 'var(--muted)' }}>
+            Join us as a partner and be part of India's largest AI healthcare initiative. Connect
+            with innovators, showcase your brand, and contribute to transforming healthcare.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.a
+              href="#"
+              className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-full"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Download Brochure
+            </motion.a>
+            <motion.a
+              href="mailto:partnerships@aibharathealth.org"
+              className="glass inline-block px-10 py-4 text-lg font-bold rounded-full hover:border-accent/40 transition-all"
+              style={{ color: 'var(--text)' }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Contact Us
+            </motion.a>
+          </div>
+        </div>
       </motion.div>
     </Section>
   )
@@ -411,7 +576,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    alert('Registration submitted! (This is a demo - no backend connected)')
+    alert('Registration submitted! (Demo - no backend connected)')
     console.log('Form data:', formData)
   }
 
@@ -431,14 +596,18 @@ function Register() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-6 text-center">Register Now</h2>
-        <p className="text-center text-gray-300 mb-12">
-          Secure your spot at AI Bharat Health Mission 2026
-        </p>
+        <div className="text-center mb-12">
+          <h2 className="text-5xl md:text-6xl font-black mb-6" style={{ color: 'var(--text)' }}>
+            Register Now
+          </h2>
+          <p className="text-xl" style={{ color: 'var(--muted)' }}>
+            Secure your spot at AI Bharat Health Mission 2026
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="glass-strong p-8 rounded-2xl space-y-6">
+        <form onSubmit={handleSubmit} className="glass-strong p-8 md:p-10 rounded-3xl space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="name" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
               Full Name
             </label>
             <input
@@ -448,13 +617,14 @@ function Register() {
               required
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple text-white placeholder-gray-500"
+              className="w-full px-4 py-4 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500 transition-all"
               placeholder="John Doe"
+              style={{ background: 'rgba(255,255,255,0.04)' }}
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
               Email
             </label>
             <input
@@ -464,13 +634,14 @@ function Register() {
               required
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple text-white placeholder-gray-500"
+              className="w-full px-4 py-4 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500 transition-all"
               placeholder="john@example.com"
+              style={{ background: 'rgba(255,255,255,0.04)' }}
             />
           </div>
 
           <div>
-            <label htmlFor="company" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="company" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
               Company / Organization
             </label>
             <input
@@ -480,13 +651,14 @@ function Register() {
               required
               value={formData.company}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple text-white placeholder-gray-500"
+              className="w-full px-4 py-4 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500 transition-all"
               placeholder="Your Company"
+              style={{ background: 'rgba(255,255,255,0.04)' }}
             />
           </div>
 
           <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-200 mb-2">
+            <label htmlFor="role" className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
               Role / Title
             </label>
             <input
@@ -496,14 +668,15 @@ function Register() {
               required
               value={formData.role}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-purple text-white placeholder-gray-500"
+              className="w-full px-4 py-4 glass rounded-xl focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500 transition-all"
               placeholder="CEO, Developer, Researcher, etc."
+              style={{ background: 'rgba(255,255,255,0.04)' }}
             />
           </div>
 
           <motion.button
             type="submit"
-            className="w-full px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-accent-purple to-accent-blue rounded-full hover:shadow-xl hover:shadow-accent-purple/50 transition-all duration-300"
+            className="btn-primary w-full px-8 py-5 text-lg font-bold text-white rounded-2xl"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -517,14 +690,22 @@ function Register() {
 
 function Footer() {
   return (
-    <footer className="py-12 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 text-center text-gray-400">
-        <p className="text-sm">
-          © 2026 AI Bharat Health Mission. All rights reserved.
-        </p>
-        <p className="text-xs mt-2">
-          Powered by BioSpectrum • Co-Partner: AI Spectrum
-        </p>
+    <footer className="py-16 border-t" style={{ borderColor: 'var(--stroke)' }}>
+      <div className="max-w-[1440px] mx-auto px-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-8">
+            <img src="/logos/biospectrum.svg" alt="BioSpectrum" className="h-8 opacity-70" />
+            <img src="/logos/aispectrum.svg" alt="AI Spectrum" className="h-8 opacity-70" />
+          </div>
+          <div className="text-center md:text-right">
+            <p className="text-sm" style={{ color: 'var(--muted)' }}>
+              © 2026 AI Bharat Health Mission. All rights reserved.
+            </p>
+            <p className="text-xs mt-1" style={{ color: 'var(--muted)', opacity: 0.6 }}>
+              Powered by BioSpectrum • Co-Partner: AI Spectrum
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   )
@@ -533,7 +714,7 @@ function Footer() {
 function Section({ id, className = '', children }) {
   return (
     <section id={id} className={`relative ${className}`}>
-      <div className="max-w-7xl mx-auto px-6">{children}</div>
+      <div className="max-w-[1440px] mx-auto px-8">{children}</div>
     </section>
   )
 }

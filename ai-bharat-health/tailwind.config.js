@@ -7,13 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'dark-bg': '#0a0a1a',
-        'dark-card': '#1a1a2e',
-        'accent-purple': '#8b5cf6',
-        'accent-blue': '#3b82f6',
+        'ink': '#071225',
+        'navy': '#0B1B3A',
+        'accent': '#00A651',
+        'accent2': '#2BD576',
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
+        'serif': ['Playfair Display', 'Georgia', 'serif'],
+      },
+      backdropBlur: {
+        'glass': '24px',
       },
     },
   },

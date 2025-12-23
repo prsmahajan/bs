@@ -1,30 +1,49 @@
 # AI Bharat Health Mission 2026 - Landing Page
 
-A premium, cinematic landing page for the AI Bharat Health Mission 2026 event.
+A premium, medical-grade landing page inspired by RAISE Summit's layout but with BioSpectrum Asia's clean green branding.
+
+## Design Philosophy
+
+This landing page combines:
+- **RAISE Summit's sophisticated layout**: Mixed typography, floating glass cards, geometric overlays
+- **BioSpectrum's medical aesthetic**: Deep navy backgrounds, professional green accents (#00A651)
+- **Healthcare premium feel**: Clean, spacious, trustworthy design for healthcare AI
 
 ## Features
 
-- **Sticky Animated Header**: Logo groups, navigation links, and CTAs with scroll-based animations
-- **Cinematic Hero Section**: Full-screen Wistia video background with animated AI SVG overlay
-- **Scroll Animations**: Smooth Framer Motion animations triggered on viewport entry
-- **Dark Premium Design**: Modern, tech-event aesthetic with glass morphism effects
-- **Fully Responsive**: Optimized for all screen sizes
-- **Accessible**: High contrast, semantic HTML, keyboard navigation support
-- **Sections**:
-  - About Event
-  - Theme
-  - Why Attend
-  - What to Expect
-  - AI Diagnosis Showdown
-  - Partnerships
-  - Registration Form
+### Layout & Design
+- **RAISE-Inspired Hero**: Mixed serif/sans typography ("Where health leaders and AI converge")
+- **Floating Glass Info Card**: Right-side card with mouse parallax tilt effect
+- **Geometric Lattice Overlay**: Subtle white lattice pattern on right side
+- **Giant AI Watermark**: Animated AI text with green glow behind content
+- **BioSpectrum Color Palette**:
+  - Ink (#071225) & Navy (#0B1B3A) backgrounds
+  - BioSpectrum Green (#00A651) & Bright Green (#2BD576) accents
+  - Glass surfaces with backdrop blur
+
+### Components
+- **Sticky Animated Header**: Morphs on scroll with logo groups and nav
+- **Hero Section**: Wistia video background, mixed typography, floating card
+- **Content Sections**: About, Theme, Why Attend, What to Expect, AI Diagnosis Showdown
+- **Partnership Section**: With download brochure CTA
+- **Registration Form**: Glass form with green accent on focus
+- **Scroll Animations**: Framer Motion viewport-triggered reveals
+
+### Technical Features
+- **Responsive Design**: Fully optimized for all screen sizes
+- **Glassmorphism**: Premium backdrop blur effects throughout
+- **Mouse Parallax**: Floating card tilts on mouse movement
+- **Green Glow Effects**: Soft glows on buttons and accents
+- **CSS Variables**: Easy theming with CSS custom properties
+- **Accessibility**: High contrast, semantic HTML, keyboard support
 
 ## Tech Stack
 
 - **React**: UI framework
 - **Vite**: Build tool and dev server
-- **Tailwind CSS**: Utility-first styling
-- **Framer Motion**: Animation library
+- **Tailwind CSS v3**: Utility-first styling
+- **Framer Motion**: Advanced animations
+- **Google Fonts**: Inter (sans) + Playfair Display (serif)
 
 ## Getting Started
 
@@ -55,77 +74,141 @@ The development server will start at `http://localhost:5173/`
 ```
 ai-bharat-health/
 ├── public/
-│   └── logos/           # BioSpectrum and AI Spectrum logos
+│   └── logos/           # BioSpectrum and AI Spectrum logos (SVG)
 ├── src/
 │   ├── App.jsx          # Main application with all components
-│   ├── App.css          # Minimal CSS (using Tailwind)
-│   ├── index.css        # Tailwind directives and custom utilities
+│   ├── App.css          # Minimal CSS
+│   ├── index.css        # Tailwind + CSS variables + custom utilities
 │   └── main.jsx         # React entry point
 ├── index.html           # HTML template
 ├── tailwind.config.js   # Tailwind configuration
+├── postcss.config.js    # PostCSS configuration
 └── vite.config.js       # Vite configuration
 ```
 
-## Component Overview
+## Component Breakdown
 
 ### Header
-- Animated sticky header with blur backdrop
-- Logo groups (BioSpectrum, AI Spectrum)
-- Navigation with animated underlines
-- CTA buttons
+- Fixed position with backdrop blur
+- Dual logo groups (BioSpectrum + AI Spectrum)
+- Center navigation with green underline animation
+- Glass secondary button + green gradient primary button
+- Shrinks and increases blur on scroll
 
 ### Hero
-- Wistia video background (autoplay, muted, looping)
-- Animated AI SVG with floating motion
-- Gradient title text
-- Primary CTA button
+- **Background Layers**:
+  - Wistia video (20% opacity, as texture)
+  - Green-tinted radial gradient overlay
+  - Heavy gradient for text readability
+- **Mixed Typography Headline**:
+  - "Where" (serif italic, muted)
+  - "health leaders and AI" (bold sans, white)
+  - "converge" (serif italic, green gradient)
+- **Floating Glass Card** (right side):
+  - Date and location info
+  - Two stacked CTAs
+  - Mouse parallax tilt effect
+  - Slow vertical float animation
+- **Decorative Elements**:
+  - Geometric lattice overlay (8% opacity)
+  - Giant "AI" watermark (8-12% opacity, green glow)
 
 ### Content Sections
-All sections feature:
-- Scroll-triggered animations
-- Glass morphism cards
-- Gradient accent colors
-- Responsive layouts
+All sections use:
+- Glass cards with hover effects
+- Green accent bars/dots
+- Scroll-triggered fade + rise animations
+- Spacious padding and typography
+- Responsive grid layouts
 
 ### Registration Form
-- Name, email, company, and role fields
-- Form validation
-- Animated submit button
-- (Demo mode - no backend)
+- Glass card container
+- Input fields with green focus rings
+- Green gradient submit button with glow
+- Form validation (HTML5)
+- Demo mode (no backend)
 
 ## Customization
 
-### Colors
-Edit `tailwind.config.js` to customize the color scheme:
+### Color Scheme
 
-```js
-colors: {
-  'dark-bg': '#0a0a1a',
-  'dark-card': '#1a1a2e',
-  'accent-purple': '#8b5cf6',
-  'accent-blue': '#3b82f6',
+Colors are defined as CSS variables in `src/index.css`:
+
+```css
+:root {
+  --ink: #071225;          /* Deep navy background */
+  --navy: #0B1B3A;         /* Secondary background */
+  --surface: rgba(255, 255, 255, 0.06);   /* Glass fill */
+  --stroke: rgba(255, 255, 255, 0.14);    /* Glass border */
+  --text: rgba(255, 255, 255, 0.92);      /* Primary text */
+  --muted: rgba(255, 255, 255, 0.70);     /* Secondary text */
+  --accent: #00A651;       /* BioSpectrum green */
+  --accent2: #2BD576;      /* Bright green */
+  --highlight: rgba(0, 166, 81, 0.35);    /* Green glow */
 }
 ```
 
+Also update Tailwind config colors for utility classes.
+
+### Fonts
+
+Update the Google Fonts import in `src/index.css` to change typography.
+
 ### Animations
-Modify Framer Motion props in `App.jsx` to adjust animation timings and effects.
+
+Modify Framer Motion props in `App.jsx`:
+- Duration, delay, easing
+- Animation variants
+- Viewport margins for scroll triggers
 
 ### Video Background
-Replace the Wistia embed URL in the Hero component to use a different video.
 
-## Performance Notes
+Replace the Wistia embed URL in the Hero component with your video URL.
 
-- Video background is optimized with pointer-events: none
-- Animations use GPU-accelerated properties
-- Lazy loading for viewport-triggered animations
-- Minimal JavaScript bundle size
+## Design Details
+
+### Typography Scale
+- Hero headline: 5xl → 8xl (responsive)
+- Section headings: 5xl → 6xl
+- Body text: lg → xl
+- Small text: xs → sm
+
+### Spacing
+- Section padding: py-32 (128px)
+- Container max-width: 1440px
+- Content max-width: varies (2xl to 6xl)
+
+### Border Radius
+- Cards: 2xl to 3xl (16-24px)
+- Buttons: full (pill shape)
+- Inputs: xl (12px)
+
+### Glass Effect
+- Backdrop blur: 24-32px
+- Background: white 6-10% opacity
+- Border: white 14-20% opacity
+
+## Performance
+
+- Video at 20% opacity reduces visual weight
+- Animations use `transform` and `opacity` (GPU-accelerated)
+- Viewport-triggered animations (lazy load)
+- Optimized bundle with Vite
+- Minimal dependencies
 
 ## Browser Support
 
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Android)
+
+## Credits
+
+Design inspired by:
+- RAISE Summit 2026 (layout and typography)
+- BioSpectrum Asia (color palette and branding)
 
 ## License
 
-This is a demonstration project for AI Bharat Health Mission 2026.
+Demo project for AI Bharat Health Mission 2026.

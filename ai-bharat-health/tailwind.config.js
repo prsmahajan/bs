@@ -11,10 +11,12 @@ export default {
         'navy': '#0B1B3A',
         'accent': '#00A651',
         'accent2': '#2BD576',
+        'btn-red': '#D81617',
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
         'serif': ['Playfair Display', 'Georgia', 'serif'],
+        'clarion': ['Clarion', 'Inter', 'sans-serif'],
       },
       backdropBlur: {
         'glass': '24px',

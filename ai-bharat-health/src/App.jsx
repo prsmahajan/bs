@@ -305,24 +305,24 @@ function Hero() {
 
 function LogoCarousel() {
   const logos = [
-    { id: 1, name: 'Partner 1', src: '../public/logos/himedia.webp' },
-    { id: 2, name: 'Partner 2', src: '../public/logos/abdos.png' },
-    { id: 3, name: 'Partner 3', src: '../public/logos/himedia.webp' },
-    { id: 4, name: 'Partner 4', src: '../public/logos/himedia.webp' },
-    { id: 5, name: 'Partner 5', src: '../public/logos/himedia.webp' },
-    { id: 6, name: 'Partner 6', src: '../public/logos/himedia.webp' },
-    { id: 7, name: 'Partner 7', src: '../public/logos/himedia.webp' },
-    { id: 8, name: 'Partner 8', src: '../public/logos/himedia.webp' },
-    { id: 9, name: 'Partner 9', src: '../public/logos/himedia.webp' },
-    { id: 10, name: 'Partner 10', src: '../public/logos/himedia.webp' },
+    { id: 1, name: 'Partner 1', src: 'logos/himedia.webp' },
+    { id: 2, name: 'Partner 2', src: 'logos/abdos.png' },
+    { id: 3, name: 'Partner 3', src: 'logos/sun-pharma.png' },
+    { id: 4, name: 'Partner 4', src: 'logos/himedia.webp' },
+    { id: 5, name: 'Partner 5', src: 'logos/himedia.webp' },
+    { id: 6, name: 'Partner 6', src: 'logos/himedia.webp' },
+    { id: 7, name: 'Partner 7', src: 'logos/himedia.webp' },
+    { id: 8, name: 'Partner 8', src: 'logos/himedia.webp' },
+    { id: 9, name: 'Partner 9', src: 'logos/himedia.webp' },
+    { id: 10, name: 'Partner 10', src: 'logos/himedia.webp' },
   ]
 
   return (
-    <section className="relative py-16 overflow-hidden border-t border-b gradient-bg z-10" style={{ borderColor: 'var(--stroke)' }}>
+    <section className="relative py-16 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
       {/* Heading */}
       <div className="mb-12 ml-32">
-        <h2 className="text-2xl md:text-5xl font-semibold inter" style={{ color: '#333' }}>
-          Trusted by <span class="italic gradient-dark font-serif">industry experts</span>
+        <h2 className="text-2xl md:text-6xl font-semibold inter" style={{ color: '#fff' }}>
+          Trusted by <span class="italic gradient font-serif">industry experts</span>
         </h2>
       </div>
       <div className="relative">
@@ -337,17 +337,17 @@ function LogoCarousel() {
             {logos.map((logo) => (
               <div
                 key={`first-${logo.id}`}
-                className="glass-card flex-shrink-0 rounded-xl px-8 py-4 flex items-center justify-center min-w-[180px] glass-card"
-                // style={{
-                //   background: 'rgba(255, 255, 255, 0.9)',
-                //   backdropFilter: 'blur(2px)',
-                //   border: '1px solid rgba(255, 255, 255, 0.1)'
-                // }}
+                className="glass-card flex-shrink-0 rounded-xl px-8 py-4 flex items-center justify-center min-w-[180px]"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(2px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}
               >
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  className="h-12 object-contain"
                 />
               </div>
             ))}
@@ -360,15 +360,15 @@ function LogoCarousel() {
                 key={`second-${logo.id}`}
                 className="glass flex-shrink-0 rounded-full px-8 py-4 flex items-center justify-center min-w-[180px]"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  backdropFilter: 'blur(20px)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(10px)',
                   border: '1px solid rgba(255, 255, 255, 0.1)'
                 }}
               >
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  className="h-12 object-contain opacity-100"
                 />
               </div>
             ))}

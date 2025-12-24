@@ -313,6 +313,12 @@ function LogoCarousel() {
 
   return (
     <section className="relative py-16 overflow-hidden border-t border-b" style={{ borderColor: 'var(--stroke)' }}>
+      {/* Heading */}
+      <div className="text-center mb-12">
+        <h2 className="text-2xl md:text-3xl font-semibold jakarta" style={{ color: 'var(--muted)' }}>
+          Trusted by industry experts
+        </h2>
+      </div>
       <div className="relative">
         {/* Gradient overlays for fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />

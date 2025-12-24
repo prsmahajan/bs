@@ -16,8 +16,29 @@ function App() {
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
       <Header scrolled={scrolled} />
-      <Hero />
-      <LogoCarousel />
+
+      {/* Video Background Container - Extends to Logo Carousel */}
+      <div className="relative">
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden" style={{ height: '100%' }}>
+          <iframe
+            src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none opacity-20 brightness-125"
+            style={{
+              width: '120vw',
+              height: '100%',
+              minHeight: '140vh',
+              border: 'none',
+            }}
+          />
+        </div>
+
+        <Hero />
+        <LogoCarousel />
+      </div>
+
       <About />
       <Theme />
       <Why />
@@ -130,21 +151,6 @@ function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
-      {/* Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <iframe
-          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 brightness-125"
-          style={{
-            width: '120vw',
-            height: '120vh',
-            border: 'none',
-          }}
-        />
-      </div>
-
       {/* Geometric Lattice Overlay (right side) */}
       <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-10 overflow-hidden opacity-70">
         <svg
@@ -312,7 +318,7 @@ function LogoCarousel() {
   ]
 
   return (
-    <section className="relative py-16 overflow-hidden border-t border-b gradient-bg" style={{ borderColor: 'var(--stroke)' }}>
+    <section className="relative py-16 overflow-hidden border-t border-b gradient-bg z-10" style={{ borderColor: 'var(--stroke)' }}>
       {/* Heading */}
       <div className="mb-12 ml-32">
         <h2 className="text-2xl md:text-5xl font-semibold inter" style={{ color: '#333' }}>

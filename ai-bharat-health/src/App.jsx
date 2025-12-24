@@ -14,27 +14,25 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
-      {/* Video Background - Covers Nav to Logo Carousel */}
-      <div className="relative">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <iframe
-            src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
-            allow="autoplay; fullscreen"
-            allowFullScreen
-            className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none opacity-20 brightness-125"
-            style={{
-              width: '120vw',
-              height: '100%',
-              border: 'none',
-            }}
-          />
-        </div>
-
-        <Header scrolled={scrolled} />
-        <Hero />
-        <LogoCarousel />
+    <div className="min-h-screen overflow-x-hidden relative" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
+      {/* Video Background - Starts from top and covers to Logo Carousel */}
+      <div className="absolute top-0 left-0 right-0 z-0 overflow-hidden pointer-events-none" style={{ height: 'calc(100vh + 350px)' }}>
+        <iframe
+          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none opacity-20 brightness-125"
+          style={{
+            width: '120vw',
+            height: '100%',
+            border: 'none',
+          }}
+        />
       </div>
+
+      <Header scrolled={scrolled} />
+      <Hero />
+      <LogoCarousel />
 
       <About />
       <Theme />

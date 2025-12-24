@@ -54,9 +54,9 @@ function Header({ scrolled }) {
     >
       <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between">
         {/* Left: Logos */}
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
+        <div className="flex items-center gap-8 -ml-6">
+          <div className="flex gap-2">
+            <span className="text-[15px] capitalize tracking-widest" style={{ color: 'var(--muted)' }}>
               Powered by
             </span>
             <img src="/logos/biospectrumasia.webp" alt="BioSpectrum" className="h-13 w-40" />

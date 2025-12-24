@@ -344,24 +344,120 @@ function LogoCarousel() {
 }
 
 function About() {
+  const pills = ['Policy Makers', 'Hospital Leaders', 'AI Startups']
+  const keyPoints = [
+    'Network with 500+ healthcare leaders',
+    'Real-world AI implementation cases',
+    'Live AI Diagnosis Showdown competition'
+  ]
+
   return (
     <Section id="about" className="py-32">
-      <motion.div
-        className="max-w-4xl mx-auto text-center"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="text-5xl md:text-6xl font-black mb-8" style={{ color: 'var(--text)' }}>
-          About the Event
-        </h2>
-        <p className="text-xl leading-relaxed" style={{ color: 'var(--muted)' }}>
-          Join us for the premier AI healthcare event of 2026. Bringing together visionaries,
-          researchers, and industry leaders to shape the future of healthcare in India through
-          artificial intelligence and cutting-edge technology.
-        </p>
-      </motion.div>
+      <div className="grid lg:grid-cols-12 gap-12 items-start">
+        {/* LEFT COLUMN (55%) */}
+        <motion.div
+          className="lg:col-span-7"
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Title */}
+          <h2 className="text-[60px] font-bold mb-8 jakarta" style={{ color: 'var(--text)' }}>
+            ABOUT THE EVENT
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-[35px] leading-tight mb-12 jakarta" style={{ color: 'var(--muted)' }}>
+            AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, bringing together policymakers, hospital leaders, researchers, startups, and global technology providers to shape the future of AI-led healthcare delivery.
+          </p>
+
+          {/* Why this mission matters */}
+          <h3 className="text-3xl font-bold mb-6 jakarta" style={{ color: 'var(--text)' }}>
+            Why this mission matters
+          </h3>
+
+          <div className="space-y-6 mb-8">
+            <p className="text-lg leading-relaxed jakarta" style={{ color: 'var(--muted)' }}>
+              India's healthcare system faces unprecedented challenges—1.4 billion people, limited infrastructure, and a severe shortage of medical professionals. Traditional approaches alone cannot bridge this gap.
+            </p>
+            <p className="text-lg leading-relaxed jakarta" style={{ color: 'var(--muted)' }}>
+              AI technology has matured to a point where it can diagnose diseases, predict outcomes, and personalize treatment at scale. The timing is perfect to deploy these solutions across India's diverse healthcare landscape.
+            </p>
+            <p className="text-lg leading-relaxed jakarta" style={{ color: 'var(--muted)' }}>
+              Success requires collaboration between government, hospitals, technology providers, and researchers. This mission creates the platform where these stakeholders can align, partner, and accelerate AI adoption in healthcare.
+            </p>
+          </div>
+
+          {/* Pills */}
+          <div className="flex flex-wrap gap-3">
+            {pills.map((pill, index) => (
+              <motion.div
+                key={index}
+                className="glass px-6 py-3 rounded-full jakarta font-semibold"
+                style={{ color: 'var(--accent)' }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                {pill}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* RIGHT COLUMN (45%) */}
+        <motion.div
+          className="lg:col-span-5"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="glass-strong rounded-3xl p-10 sticky top-32">
+            {/* Event Title */}
+            <div className="mb-8">
+              <h3 className="text-4xl font-bold mb-2 jakarta" style={{ color: 'var(--text)' }}>
+                AI Bharat Health Mission
+              </h3>
+              <p className="text-6xl font-black jakarta text-gradient-green">
+                2026
+              </p>
+            </div>
+
+            {/* Key Takeaways */}
+            <div className="space-y-4 mb-8">
+              {keyPoints.map((point, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-start gap-3"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ background: 'var(--accent)' }} />
+                  <p className="text-lg jakarta" style={{ color: 'var(--text)' }}>
+                    {point}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <motion.a
+              href="#register"
+              className="btn-primary block w-full text-center px-8 py-5 text-lg font-bold text-white rounded-xl"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Register now
+            </motion.a>
+          </div>
+        </motion.div>
+      </div>
     </Section>
   )
 }

@@ -211,25 +211,25 @@ function Hero() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl leading-[1.1] mb-6">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-8xl leading-[1.1] mb-6 ml-12">
             <span className="font-serif italic font-normal" style={{ color: 'var(--muted)' }}>
-              Where{' '}
+              Where
             </span>
             <span className="font-bold" style={{ color: 'var(--text)' }}>
-              health leaders
-              <br />
+              {' '}health leaders{' '}
+              {/* <br /> */}
               and AI{' '}
             </span>
             <span className="font-serif italic font-normal text-gradient-green">
               converge
             </span>
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-xl tit" style={{ color: 'var(--muted)' }}>
+          <p className="text-lg md:text-xl mb-8 max-w-xl tit ml-12" style={{ color: 'var(--muted)' }}>
             The global platform for deal-making, ROI impact and visibility in healthcare AI.
           </p>
           <motion.a
             href="#register"
-            className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-md"
+            className="btn-primary inline-block px-10 py-4 text-lg font-bold text-white rounded-md ml-12"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -299,30 +299,30 @@ function Hero() {
 
 function LogoCarousel() {
   const logos = [
-    { id: 1, name: 'Partner 1', src: '' },
-    { id: 2, name: 'Partner 2', src: '' },
-    { id: 3, name: 'Partner 3', src: '' },
-    { id: 4, name: 'Partner 4', src: '' },
-    { id: 5, name: 'Partner 5', src: '' },
-    { id: 6, name: 'Partner 6', src: '' },
-    { id: 7, name: 'Partner 7', src: '' },
-    { id: 8, name: 'Partner 8', src: '' },
-    { id: 9, name: 'Partner 9', src: '' },
-    { id: 10, name: 'Partner 10', src: '' },
+    { id: 1, name: 'Partner 1', src: '../public/logos/himedia.webp' },
+    { id: 2, name: 'Partner 2', src: '../public/logos/abdos.png' },
+    { id: 3, name: 'Partner 3', src: '../public/logos/himedia.webp' },
+    { id: 4, name: 'Partner 4', src: '../public/logos/himedia.webp' },
+    { id: 5, name: 'Partner 5', src: '../public/logos/himedia.webp' },
+    { id: 6, name: 'Partner 6', src: '../public/logos/himedia.webp' },
+    { id: 7, name: 'Partner 7', src: '../public/logos/himedia.webp' },
+    { id: 8, name: 'Partner 8', src: '../public/logos/himedia.webp' },
+    { id: 9, name: 'Partner 9', src: '../public/logos/himedia.webp' },
+    { id: 10, name: 'Partner 10', src: '../public/logos/himedia.webp' },
   ]
 
   return (
-    <section className="relative py-16 overflow-hidden border-t border-b" style={{ borderColor: 'var(--stroke)' }}>
+    <section className="relative py-16 overflow-hidden border-t border-b gradient-bg" style={{ borderColor: 'var(--stroke)' }}>
       {/* Heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-2xl md:text-3xl font-semibold jakarta" style={{ color: 'var(--muted)' }}>
-          Trusted by industry experts
+      <div className="mb-12 ml-32">
+        <h2 className="text-2xl md:text-5xl font-semibold inter" style={{ color: '#333' }}>
+          Trusted by <span class="italic gradient-dark font-serif">industry experts</span>
         </h2>
       </div>
       <div className="relative">
         {/* Gradient overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#071225] to-transparent z-10 pointer-events-none" />
+        {/* <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#071225] to-transparent z-10 pointer-events-none" /> */}
 
         {/* Infinite scrolling container */}
         <div className="flex animate-scroll">
@@ -331,12 +331,12 @@ function LogoCarousel() {
             {logos.map((logo) => (
               <div
                 key={`first-${logo.id}`}
-                className="glass flex-shrink-0 rounded-full px-8 py-4 flex items-center justify-center min-w-[180px]"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}
+                className="glass-card flex-shrink-0 rounded-xl px-8 py-4 flex items-center justify-center min-w-[180px] glass-card"
+                // style={{
+                //   background: 'rgba(255, 255, 255, 0.9)',
+                //   backdropFilter: 'blur(2px)',
+                //   border: '1px solid rgba(255, 255, 255, 0.1)'
+                // }}
               >
                 <img
                   src={logo.src}

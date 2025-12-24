@@ -86,6 +86,71 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  
+  .gradient {
+    background: linear-gradient(135deg, #eee 0%, #555 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-dark {
+    background: linear-gradient(135deg, #282828 0%, #ff7a7a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #f0f0f0cd 0%, #a0a0a0ad 100%);
+  }
+
+  .glass-card {
+  width: 240px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.11);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 12px 6px rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
 
   .btn-primary {
     background: rgba(255, 255, 255, 0.1);
@@ -127,6 +192,15 @@
     font-family: "Plus Jakarta Sans", sans-serif;
   }
 
+  .inter {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+  }
+
+  .box-sh {
+    background: #ffffffcb;
+box-shadow: inset 1px 1px 0 -.5px #333, inset -1px -1px 0 -.5px #262626, inset 1px 1px .5px -1px #fff, inset -1px -1px .5px -1px #fff, inset 0 0 3px #ffffff80, inset 0 0 11px #f2f2f2;
+  }
+
   /* Logo Carousel Animation */
   @keyframes scroll {
     0% {
@@ -138,7 +212,7 @@
   }
 
   .animate-scroll {
-    animation: scroll 30s linear infinite;
+    animation: scroll 10s linear infinite;
   }
 
   .animate-scroll:hover {

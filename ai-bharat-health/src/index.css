@@ -47,6 +47,18 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -203,19 +215,5 @@
   .box-sh {
     background: #fafafa22;
 box-shadow: inset 1px 1px 0 -.5px #333, inset -1px -1px 0 -.5px #262626, inset 1px 1px .5px -1px #fff, inset -1px -1px .5px -1px #fff, inset 0 0 3px #ffffff80, inset 0 0 11px #f2f2f2;
-  }
-
-  /* Logo Carousel Animation */
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .animate-scroll {
-    animation: scroll 5s linear infinite;
   }
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import Marquee from 'react-fast-marquee'
 import './App.css'
 
 function App() {
@@ -318,56 +319,26 @@ function LogoCarousel() {
 
   return (
     <section className="relative py-16 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
-      <div className="relative">
-        {/* Gradient overlays for fade effect */}
-        {/* <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#071225] to-transparent z-10 pointer-events-none" /> */}
-
-        {/* Infinite scrolling container */}
-        <div className="flex animate-scroll">
-          {/* First set of logos */}
-          <div className="flex gap-6 px-3">
-            {logos.map((logo) => (
-              <div
-                key={`first-${logo.id}`}
-                className="glass-card flex-shrink-0 rounded-xl px-8 py-4 flex items-center justify-center min-w-[180px]"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(2px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}
-              >
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  className="h-12 object-contain emitka scale-125"
-                />
-              </div>
-            ))}
+      {/* Smooth Infinite Marquee */}
+      <Marquee speed={50} gradient={false} pauseOnHover={true}>
+        {logos.map((logo, index) => (
+          <div
+            key={index}
+            className="glass-card flex-shrink-0 rounded-xl px-8 py-4 flex items-center justify-center min-w-[180px] mx-3"
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(2px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <img
+              src={logo.src}
+              alt={logo.name}
+              className="h-12 object-contain emitka scale-125"
+            />
           </div>
-
-          {/* Duplicate set for seamless loop */}
-          <div className="flex gap-6 px-3">
-            {logos.map((logo) => (
-              <div
-                key={`second-${logo.id}`}
-                className="glass flex-shrink-0 rounded-full px-8 py-4 flex items-center justify-center min-w-[180px]"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}
-              >
-                <img
-                  src={logo.src}
-                  alt={logo.name}
-                  className="h-12 object-contain opacity-100"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+        ))}
+      </Marquee>
     </section>
   )
 }

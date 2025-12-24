@@ -17,6 +17,7 @@ function App() {
     <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
       <Header scrolled={scrolled} />
       <Hero />
+      <LogoCarousel />
       <About />
       <Theme />
       <Why />
@@ -291,6 +292,76 @@ function Hero() {
             </div>
           </motion.div>
         </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function LogoCarousel() {
+  const logos = [
+    { id: 1, name: 'Partner 1', src: '' },
+    { id: 2, name: 'Partner 2', src: '' },
+    { id: 3, name: 'Partner 3', src: '' },
+    { id: 4, name: 'Partner 4', src: '' },
+    { id: 5, name: 'Partner 5', src: '' },
+    { id: 6, name: 'Partner 6', src: '' },
+    { id: 7, name: 'Partner 7', src: '' },
+    { id: 8, name: 'Partner 8', src: '' },
+    { id: 9, name: 'Partner 9', src: '' },
+    { id: 10, name: 'Partner 10', src: '' },
+  ]
+
+  return (
+    <section className="relative py-16 overflow-hidden border-t border-b" style={{ borderColor: 'var(--stroke)' }}>
+      <div className="relative">
+        {/* Gradient overlays for fade effect */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#071225] to-transparent z-10 pointer-events-none" />
+
+        {/* Infinite scrolling container */}
+        <div className="flex animate-scroll">
+          {/* First set of logos */}
+          <div className="flex gap-6 px-3">
+            {logos.map((logo) => (
+              <div
+                key={`first-${logo.id}`}
+                className="glass flex-shrink-0 rounded-full px-8 py-4 flex items-center justify-center min-w-[180px]"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Duplicate set for seamless loop */}
+          <div className="flex gap-6 px-3">
+            {logos.map((logo) => (
+              <div
+                key={`second-${logo.id}`}
+                className="glass flex-shrink-0 rounded-full px-8 py-4 flex items-center justify-center min-w-[180px]"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

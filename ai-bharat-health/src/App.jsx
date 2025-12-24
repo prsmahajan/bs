@@ -51,7 +51,7 @@ function Header({ scrolled }) {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       style={{
-        backdropFilter: scrolled ? 'blur(5px)' : 'blur(8px)',
+        backdropFilter: scrolled ? 'blur(5px)' : 'blur(3px)',
       }}
     >
       <div className="max-w-[1440px] mx-auto px-8 flex items-center justify-between">
@@ -130,17 +130,17 @@ function Hero() {
   }, [mouseX, mouseY])
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
+    <section className="relative min-h-screen flex items-center overflow-visible pt-24">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-visible">
         <iframe
           src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
           allow="autoplay; fullscreen"
           allowFullScreen
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 brightness-125"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30 brightness-125}}"
           style={{
-            width: '120vw',
-            height: '120vh',
+            width: '142.5vw',
+            height: '170vh',
             border: 'none',
           }}
         />
@@ -318,9 +318,9 @@ function LogoCarousel() {
   ]
 
   return (
-    <section className="relative py-16 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
+    <section className="relative py-5 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
       {/* Smooth Infinite Marquee */}
-      <Marquee speed={50} gradient={false} pauseOnHover={true}>
+      <Marquee speed={50} gradient={false}>
         {logos.map((logo, index) => (
           <div
             key={index}
@@ -334,7 +334,7 @@ function LogoCarousel() {
             <img
               src={logo.src}
               alt={logo.name}
-              className="h-12 object-contain emitka scale-125"
+              className="h-12 object-contain emitka scale-100"
             />
           </div>
         ))}

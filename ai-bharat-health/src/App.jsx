@@ -42,11 +42,10 @@ function Header({ scrolled }) {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? 'py-3 border-b border-white/90'
           : 'py-4'
-      }`}
+        }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -101,7 +100,7 @@ function Header({ scrolled }) {
         </div>
       </div>
     </motion.header>
-        )
+  )
 }
 
 function Hero() {
@@ -156,7 +155,7 @@ function Hero() {
         >
           <defs>
             <pattern id="lattice" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M0 0L40 40M40 0L0 40" stroke="white" strokeWidth="0.5" opacity="0.3"/>
+              <path d="M0 0L40 40M40 0L0 40" stroke="white" strokeWidth="0.5" opacity="0.3" />
             </pattern>
           </defs>
           <rect width="400" height="600" fill="url(#lattice)" transform="rotate(15 200 300)" />
@@ -212,7 +211,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-8xl leading-[1.1] mb-6 ml-12">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-8xl leading-[1.1] mb-6 mt-8 ml-12">
             <span className="font-serif italic font-normal" style={{ color: 'var(--muted)' }}>
               Where
             </span>
@@ -239,6 +238,11 @@ function Hero() {
           >
             Register now
           </motion.a>
+          <div className="mb-4 mt-8 ml-12">
+            <h2 className="text-2xl md:text-5xl font-semibold inter" style={{ color: '#fff' }}>
+              Trusted by <span class="italic gradient font-serif">industry experts</span>
+            </h2>
+          </div>
         </motion.div>
 
         {/* Right: Floating Glass Card */}
@@ -267,7 +271,7 @@ function Hero() {
           >
             <div className="flex flex-col items-baseline gap-4 mb-28">
               <div className="text-5xl font-medium jakarta" style={{ color: '#eee' }}>
-               17 April 2026,
+                17 April 2026,
               </div>
               <div className="text-3xl font-medium jakarta">Taj, MG Road, Bengaluru</div>
             </div>
@@ -300,26 +304,20 @@ function Hero() {
 
 function LogoCarousel() {
   const logos = [
-    { id: 1, name: 'Partner 1', src: 'logos/himedia.webp' },
+    { id: 1, name: 'Partner 1', src: 'logos/eppendorf.png' },
     { id: 2, name: 'Partner 2', src: 'logos/abdos.png' },
     { id: 3, name: 'Partner 3', src: 'logos/sun-pharma.png' },
-    { id: 4, name: 'Partner 4', src: 'logos/himedia.webp' },
-    { id: 5, name: 'Partner 5', src: 'logos/himedia.webp' },
-    { id: 6, name: 'Partner 6', src: 'logos/himedia.webp' },
-    { id: 7, name: 'Partner 7', src: 'logos/himedia.webp' },
-    { id: 8, name: 'Partner 8', src: 'logos/himedia.webp' },
-    { id: 9, name: 'Partner 9', src: 'logos/himedia.webp' },
-    { id: 10, name: 'Partner 10', src: 'logos/himedia.webp' },
+    { id: 4, name: 'Partner 4', src: 'logos/poonawala.png' },
+    { id: 5, name: 'Partner 5', src: 'logos/biomeriex.png' },
+    { id: 6, name: 'Partner 6', src: 'logos/himedia.png' },
+    { id: 7, name: 'Partner 7', src: 'logos/deeptek.png' },
+    { id: 8, name: 'Partner 8', src: 'logos/moleculeai.png' },
+    { id: 9, name: 'Partner 9', src: 'logos/miltenyi.png' },
+    { id: 10, name: 'Partner 10', src: 'logos/lonza.png' },
   ]
 
   return (
     <section className="relative py-16 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
-      {/* Heading */}
-      <div className="mb-12 ml-32">
-        <h2 className="text-2xl md:text-6xl font-semibold inter" style={{ color: '#fff' }}>
-          Trusted by <span class="italic gradient font-serif">industry experts</span>
-        </h2>
-      </div>
       <div className="relative">
         {/* Gradient overlays for fade effect */}
         {/* <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#071225] to-transparent z-10 pointer-events-none" />
@@ -342,7 +340,7 @@ function LogoCarousel() {
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className="h-12 object-contain"
+                  className="h-12 object-contain emitka scale-125"
                 />
               </div>
             ))}

@@ -184,6 +184,10 @@
     opacity: 0.5;
   }
 
+  .emitka {
+    filter: brightness(0) invert(1);
+  }
+
   .nav {
     font-family: Waldenburg, sans-serif;
   }
@@ -212,10 +216,6 @@ box-shadow: inset 1px 1px 0 -.5px #333, inset -1px -1px 0 -.5px #262626, inset 1
   }
 
   .animate-scroll {
-    animation: scroll 10s linear infinite;
-  }
-
-  .animate-scroll:hover {
-    animation-play-state: paused;
+    animation: scroll 5s linear infinite;
   }
 }

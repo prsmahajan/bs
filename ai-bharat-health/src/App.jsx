@@ -14,22 +14,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen overflow-x-hidden relative" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
-      {/* Video Background - Starts from top and covers to Logo Carousel */}
-      <div className="absolute top-0 left-0 right-0 z-0 overflow-hidden pointer-events-none" style={{ height: 'calc(100vh + 350px)' }}>
-        <iframe
-          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-          className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none opacity-20 brightness-125"
-          style={{
-            width: '120vw',
-            height: '100%',
-            border: 'none',
-          }}
-        />
-      </div>
-
+    <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
       <Header scrolled={scrolled} />
       <Hero />
       <LogoCarousel />
@@ -146,6 +131,21 @@ function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-24">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <iframe
+          src="https://fast.wistia.net/embed/iframe/xo8q6fk8iq?autoPlay=1&muted=true"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-20 brightness-125"
+          style={{
+            width: '120vw',
+            height: '120vh',
+            border: 'none',
+          }}
+        />
+      </div>
+
       {/* Geometric Lattice Overlay (right side) */}
       <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-10 overflow-hidden opacity-70">
         <svg

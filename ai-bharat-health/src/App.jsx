@@ -121,7 +121,6 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
           <nav className="hidden xl:flex items-center gap-8 relative">
             {navLinks.map((link, index) => {
               const isActive = activeSection === link.id
-              const activeIndex = navLinks.findIndex(l => l.id === activeSection)
 
               return (
                 <a
@@ -132,28 +131,18 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
                 >
                   {link.label}
 
-                  {/* Progress bar showing section completion - grows from current to next link */}
-                  {index === activeIndex && index < navLinks.length - 1 && (
+                  {/* Progress bar beneath active link */}
+                  {isActive && (
                     <motion.div
-                      className="absolute left-full top-1/2 h-[2px] -translate-y-1/2 ml-4"
+                      className="absolute bottom-0 left-0 h-[2px]"
                       style={{
                         background: 'var(--accent)',
                         transformOrigin: 'left'
                       }}
                       animate={{
-                        width: `calc(2rem * ${sectionProgress})`
+                        width: `${sectionProgress * 100}%`
                       }}
                       transition={{ duration: 0.1, ease: 'linear' }}
-                    />
-                  )}
-
-                  {/* Active dot indicator */}
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeDot"
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
-                      style={{ background: 'var(--accent)' }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                 </a>

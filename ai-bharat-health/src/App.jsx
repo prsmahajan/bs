@@ -436,10 +436,10 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
   const containerRef = useRef(null)
   const Component = as
 
-  // Track scroll progress for the entire container
+  // Track scroll progress for the entire container - LONGER range for slower reveal
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.8", "end 0.4"]
+    offset: ["start 0.9", "end 0.2"]  // Much larger range for smoother sequential reveal
   })
 
   useEffect(() => {
@@ -556,11 +556,14 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
 // Individual line component - reveals sequentially based on lineIndex
 function ScrollRevealLine({ children, lineIndex, totalLines, scrollProgress }) {
   // Calculate when this line should start and finish revealing
-  // Line 0: 0.0 to 0.33 (if 3 lines)
-  // Line 1: 0.33 to 0.66
-  // Line 2: 0.66 to 1.0
-  const startProgress = lineIndex / totalLines
-  const endProgress = (lineIndex + 1) / totalLines
+  // With overlap for smoother transitions but still sequential
+  // Line 0: 0.0 to 0.4 (if 3 lines)
+  // Line 1: 0.3 to 0.7
+  // Line 2: 0.6 to 1.0
+  const overlap = 0.1 // Small overlap for smoothness
+  const lineWidth = 1 / totalLines + overlap
+  const startProgress = Math.max(0, (lineIndex / totalLines) - overlap)
+  const endProgress = Math.min(1, startProgress + lineWidth)
 
   // Map overall scroll to this line's individual progress
   const lineFillProgress = useTransform(
@@ -642,25 +645,31 @@ function Stats() {
   ]
 
   useEffect(() => {
+    const currentRef = statsRef.current
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        // Trigger count-up animation when section scrolls into view
+        if (entry.isIntersecting && !isInView) {
           setIsInView(true)
         }
       },
-      { threshold: 0.3 }
+      {
+        threshold: 0.5,  // Trigger when 50% of section is visible
+        rootMargin: '0px'
+      }
     )
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current)
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current)
+      if (currentRef) {
+        observer.unobserve(currentRef)
       }
     }
-  }, [])
+  }, [isInView])
 
   return (
     <Section id="stats" className="py-0">

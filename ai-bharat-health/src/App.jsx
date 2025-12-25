@@ -44,8 +44,8 @@ function Header({ scrolled }) {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'py-3 border-b border-white/90'
-          : 'py-4'
+        ? 'py-3 border-b border-white/90'
+        : 'py-4'
         }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -280,7 +280,7 @@ function Hero() {
             <div className="space-y-3">
               <motion.a
                 href="#register"
-                className="btn-primary block w-full text-center px-6 py-4 text-base font-bold text-white rounded-md"
+                className="btn-primary block w-full text-center px-6 py-4 text-lg font-bold text-white rounded-md"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -288,7 +288,7 @@ function Hero() {
               </motion.a>
               <motion.a
                 href="#partner"
-                className="glass block w-full text-center px-6 py-4 text-base font-semibold rounded-md hover:border-white transition-all group jakarta"
+                className="glass block w-full text-center px-6 py-4 text-lg font-semibold rounded-md hover:border-white transition-all group jakarta"
                 style={{ color: 'var(--text)' }}
                 whileHover={{ scale: 1.00 }}
                 whileTap={{ scale: 0.98 }}
@@ -318,7 +318,7 @@ function LogoCarousel() {
   ]
 
   return (
-    <section className="relative py-5 overflow-hidden border-b z-10" style={{ borderColor: 'var(--stroke)' }}>
+    <section className="relative py-5 overflow-hidden border-b z-10">
       {/* Smooth Infinite Marquee */}
       <Marquee speed={50} gradient={false}>
         {logos.map((logo, index) => (
@@ -334,7 +334,7 @@ function LogoCarousel() {
             <img
               src={logo.src}
               alt={logo.name}
-              className="h-12 object-contain emitka scale-100"
+              className="h-12 object-contain emitka scale-130 hover:scale-150 transition-all duration-400"
             />
           </div>
         ))}
@@ -378,8 +378,8 @@ function About() {
   ]
 
   return (
-    <Section id="about" className="py-32">
-      <div className="grid lg:grid-cols-12 gap-12 items-start">
+    <Section id="about" className="py-16 bai text-center">
+      <div className="flex gap-12 items-center text-center lg:px-48">
         {/* LEFT COLUMN (55%) */}
         <motion.div
           className="lg:col-span-7"
@@ -389,38 +389,15 @@ function About() {
           transition={{ duration: 0.8 }}
         >
           {/* Title with scroll reveal */}
-          <h2 className="text-[60px] font-bold mb-8 jakarta">
+          <h2 className="text-[60px] font-bold mb-8">
             <ScrollRevealText>ABOUT THE EVENT</ScrollRevealText>
           </h2>
 
           {/* Subtitle with scroll reveal - line by line */}
-          <div className="text-[35px] leading-tight mb-12 jakarta">
-            <ScrollRevealText>AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, </ScrollRevealText>
-            <ScrollRevealText>bringing together policymakers, hospital leaders, researchers, startups, </ScrollRevealText>
-            <ScrollRevealText>and global technology providers to shape the future of AI-led healthcare delivery.</ScrollRevealText>
-          </div>
-
-          {/* Why this mission matters with scroll reveal */}
-          <h3 className="text-3xl font-bold mb-6 jakarta">
-            <ScrollRevealText>Why this mission matters</ScrollRevealText>
-          </h3>
-
-          <div className="space-y-6 mb-8">
-            <p className="text-lg leading-relaxed jakarta">
-              <ScrollRevealText>India's healthcare system faces unprecedented challenges—1.4 billion people, </ScrollRevealText>
-              <ScrollRevealText>limited infrastructure, and a severe shortage of medical professionals. </ScrollRevealText>
-              <ScrollRevealText>Traditional approaches alone cannot bridge this gap.</ScrollRevealText>
-            </p>
-            <p className="text-lg leading-relaxed jakarta">
-              <ScrollRevealText>AI technology has matured to a point where it can diagnose diseases, </ScrollRevealText>
-              <ScrollRevealText>predict outcomes, and personalize treatment at scale. The timing is perfect </ScrollRevealText>
-              <ScrollRevealText>to deploy these solutions across India's diverse healthcare landscape.</ScrollRevealText>
-            </p>
-            <p className="text-lg leading-relaxed jakarta">
-              <ScrollRevealText>Success requires collaboration between government, hospitals, technology providers, </ScrollRevealText>
-              <ScrollRevealText>and researchers. This mission creates the platform where these stakeholders </ScrollRevealText>
-              <ScrollRevealText>can align, partner, and accelerate AI adoption in healthcare.</ScrollRevealText>
-            </p>
+          <div className="text-[30px] leading-tight mb-12 text-justify">
+            <ScrollRevealText>AI Bharat Health Mission 2026 is India's premier healthcare AI gathering
+            bringing together policymakers, hospital leaders, researchers, startups,
+            and global technology providers to shape the future of AI-led healthcare delivery.</ScrollRevealText>
           </div>
 
           {/* Pills */}
@@ -428,7 +405,7 @@ function About() {
             {pills.map((pill, index) => (
               <motion.div
                 key={index}
-                className="glass px-6 py-3 rounded-full jakarta font-semibold"
+                className="glass px-6 py-3 rounded-full font-semibold"
                 style={{ color: 'var(--accent)' }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -443,7 +420,7 @@ function About() {
         </motion.div>
 
         {/* RIGHT COLUMN (45%) */}
-        <motion.div
+        {/* <motion.div
           className="lg:col-span-5"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -452,17 +429,17 @@ function About() {
         >
           <div className="glass-strong rounded-3xl p-10 sticky top-32">
             {/* Event Title */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
               <h3 className="text-4xl font-bold mb-2 jakarta" style={{ color: 'var(--text)' }}>
                 AI Bharat Health Mission
               </h3>
               <p className="text-6xl font-black jakarta text-gradient-green">
                 2026
               </p>
-            </div>
+            </div> */}
 
             {/* Key Takeaways */}
-            <div className="space-y-4 mb-8">
+            {/* <div className="space-y-4 mb-8">
               {keyPoints.map((point, index) => (
                 <motion.div
                   key={index}
@@ -478,10 +455,10 @@ function About() {
                   </p>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
 
             {/* CTA Button */}
-            <motion.a
+            {/* <motion.a
               href="#register"
               className="btn-primary block w-full text-center px-8 py-5 text-lg font-bold text-white rounded-xl"
               whileHover={{ scale: 1.03 }}
@@ -490,7 +467,7 @@ function About() {
               Register now
             </motion.a>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </Section>
   )

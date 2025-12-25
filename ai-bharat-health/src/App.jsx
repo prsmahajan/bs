@@ -417,20 +417,112 @@ function LogoCarousel() {
   )
 }
 
-// Component for scroll-revealed text that automatically splits into lines
+// Component for scroll-revealed text that automatically splits into ACTUAL rendered lines
 function ScrollRevealText({ children, className = "", as = "div" }) {
-  // Split text into lines if it's a string
-  const lines = typeof children === 'string'
-    ? children.split('\n').filter(line => line.trim())
-    : [children]
-
+  const [lines, setLines] = useState([])
+  const containerRef = useRef(null)
   const Component = as
 
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    const text = typeof children === 'string' ? children : children.toString()
+    const words = text.split(/\s+/).filter(word => word.trim())
+
+    // Create temporary spans for each word to measure positions
+    const tempContainer = document.createElement('div')
+    tempContainer.style.cssText = window.getComputedStyle(containerRef.current).cssText
+    tempContainer.style.position = 'absolute'
+    tempContainer.style.visibility = 'hidden'
+    tempContainer.style.width = `${containerRef.current.offsetWidth}px`
+    document.body.appendChild(tempContainer)
+
+    const wordElements = words.map(word => {
+      const span = document.createElement('span')
+      span.textContent = word + ' '
+      span.style.whiteSpace = 'nowrap'
+      tempContainer.appendChild(span)
+      return { word, element: span }
+    })
+
+    // Group words by their Y position (actual rendered lines)
+    const lineGroups = []
+    let currentLine = []
+    let lastTop = -1
+
+    wordElements.forEach(({ word, element }) => {
+      const top = element.offsetTop
+      if (top !== lastTop && currentLine.length > 0) {
+        lineGroups.push(currentLine.join(' '))
+        currentLine = []
+      }
+      currentLine.push(word)
+      lastTop = top
+    })
+
+    if (currentLine.length > 0) {
+      lineGroups.push(currentLine.join(' '))
+    }
+
+    document.body.removeChild(tempContainer)
+    setLines(lineGroups)
+
+    // Recalculate on resize
+    const handleResize = () => {
+      setTimeout(() => {
+        if (!containerRef.current) return
+
+        const tempContainer2 = document.createElement('div')
+        tempContainer2.style.cssText = window.getComputedStyle(containerRef.current).cssText
+        tempContainer2.style.position = 'absolute'
+        tempContainer2.style.visibility = 'hidden'
+        tempContainer2.style.width = `${containerRef.current.offsetWidth}px`
+        document.body.appendChild(tempContainer2)
+
+        const wordElements2 = words.map(word => {
+          const span = document.createElement('span')
+          span.textContent = word + ' '
+          span.style.whiteSpace = 'nowrap'
+          tempContainer2.appendChild(span)
+          return { word, element: span }
+        })
+
+        const lineGroups2 = []
+        let currentLine2 = []
+        let lastTop2 = -1
+
+        wordElements2.forEach(({ word, element }) => {
+          const top = element.offsetTop
+          if (top !== lastTop2 && currentLine2.length > 0) {
+            lineGroups2.push(currentLine2.join(' '))
+            currentLine2 = []
+          }
+          currentLine2.push(word)
+          lastTop2 = top
+        })
+
+        if (currentLine2.length > 0) {
+          lineGroups2.push(currentLine2.join(' '))
+        }
+
+        document.body.removeChild(tempContainer2)
+        setLines(lineGroups2)
+      }, 100)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [children])
+
   return (
-    <Component className={className}>
-      {lines.map((line, index) => (
-        <ScrollRevealLine key={index}>{line}</ScrollRevealLine>
-      ))}
+    <Component ref={containerRef} className={className}>
+      {lines.length > 0 ? (
+        lines.map((line, index) => (
+          <ScrollRevealLine key={index}>{line} </ScrollRevealLine>
+        ))
+      ) : (
+        <span style={{ opacity: 0 }}>{children}</span>
+      )}
     </Component>
   )
 }
@@ -479,11 +571,9 @@ function About() {
             ABOUT THE EVENT
           </ScrollRevealText>
 
-          {/* Subtitle with scroll reveal - automatically splits by lines */}
+          {/* Subtitle with scroll reveal - automatically detects rendered lines! */}
           <ScrollRevealText className="text-[24px] md:text-[30px] leading-tight mb-8 md:mb-12 text-justify">
-            {`AI Bharat Health Mission 2026 is India's premier healthcare AI gathering
-bringing together policymakers, hospital leaders, researchers, startups,
-and global technology providers to shape the future of AI-led healthcare delivery.`}
+            AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, bringing together policymakers, hospital leaders, researchers, startups, and global technology providers to shape the future of AI-led healthcare delivery.
           </ScrollRevealText>
 
           {/* Pills */}

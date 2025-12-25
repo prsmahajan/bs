@@ -47,17 +47,48 @@ function App() {
 }
 
 function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
+  const [activeSection, setActiveSection] = useState('about')
+
   const navLinks = [
-    { label: 'About event', href: '#about' },
-    { label: 'Theme', href: '#theme' },
-    { label: 'Why Attend', href: '#why' },
-    { label: 'What to expect', href: '#expect' },
-    { label: 'AI Diagnosis Showdown', href: '#showdown' },
+    { label: 'About event', href: '#about', id: 'about' },
+    { label: 'Theme', href: '#theme', id: 'theme' },
+    { label: 'Why Attend', href: '#why', id: 'why' },
+    { label: 'What to expect', href: '#expect', id: 'expect' },
+    { label: 'AI Diagnosis Showdown', href: '#showdown', id: 'showdown' },
   ]
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false)
   }
+
+  // Track active section on scroll
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px', // Trigger when section is in middle of viewport
+      threshold: 0
+    }
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    // Observe all sections
+    navLinks.forEach((link) => {
+      const element = document.getElementById(link.id)
+      if (element) {
+        observer.observe(element)
+      }
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <>
@@ -85,19 +116,24 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
           </div>
 
           {/* Center: Nav Links - Desktop */}
-          <nav className="hidden xl:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-8 relative">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="relative text-md font-medium transition-colors group nav"
-                style={{ color: 'var(--muted)' }}
+                className="relative text-md font-medium transition-colors group nav py-2"
+                style={{ color: activeSection === link.id ? 'var(--text)' : 'var(--muted)' }}
               >
                 {link.label}
-                <span
-                  className="absolute bottom-0 left-0 w-0 h-1 transition-all duration-300 group-hover:w-full"
-                  style={{ background: 'var(--accent)' }}
-                />
+                {/* Active indicator bar */}
+                {activeSection === link.id && (
+                  <motion.span
+                    layoutId="activeSection"
+                    className="absolute bottom-0 left-0 right-0 h-1"
+                    style={{ background: 'var(--accent)' }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
               </a>
             ))}
           </nav>

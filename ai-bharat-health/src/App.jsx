@@ -784,30 +784,156 @@ function Stats() {
 
 // Copy the rest of the functions from the original file
 function Theme() {
+  const pillars = [
+    {
+      title: 'From Pilots to Production',
+      description: 'Move AI from experiments to scalable, deployable hospital systems.',
+      keywords: 'Validation · Deployment · ROI',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      )
+    },
+    {
+      title: 'Responsible & Trusted AI',
+      description: 'Build safe, compliant AI that clinicians and patients can trust.',
+      keywords: 'Governance · Privacy · Safety',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      )
+    },
+    {
+      title: 'Clinical Decision Intelligence',
+      description: 'Augment clinicians with human-in-the-loop workflows and diagnostics.',
+      keywords: 'Diagnostics · Workflow · Assistive AI',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      )
+    },
+    {
+      title: 'India-Scale Healthcare AI',
+      description: 'Solve for affordability, access, and interoperability across India.',
+      keywords: 'Public Health · Scale · Interoperability',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    }
+  ]
+
   return (
-    <Section id="theme" className="py-32">
-      <motion.div
-        className="max-w-5xl mx-auto"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="glass-strong rounded-3xl p-12 md:p-16 text-center">
-          <div className="inline-block mb-6 px-6 py-2 glass rounded-full">
-            <span className="text-sm font-semibold uppercase tracking-wider text-gradient-green">
-              2026 Theme
+    <Section id="theme" className="py-32 relative overflow-hidden">
+      {/* Subtle mesh overlay - right side */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-0 opacity-[0.06]">
+        <svg
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-full h-full"
+          viewBox="0 0 400 600"
+          fill="none"
+          preserveAspectRatio="xMaxYMid slice"
+        >
+          <defs>
+            <pattern id="theme-mesh" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M0 0L40 40M40 0L0 40" stroke="white" strokeWidth="0.5" opacity="0.4" />
+            </pattern>
+          </defs>
+          <rect width="400" height="600" fill="url(#theme-mesh)" />
+        </svg>
+      </div>
+
+      <div className="relative z-10">
+        {/* Top intro - centered */}
+        <motion.div
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
+              THEME
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-gradient-green">
-            AI-Powered Healthcare for Bharat
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6" style={{ color: 'var(--text)' }}>
+            The Theme
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto" style={{ color: 'var(--muted)' }}>
-            Exploring how artificial intelligence can democratize healthcare access, improve
-            diagnostics, and create sustainable health solutions for over a billion people.
+          <p className="text-lg md:text-xl max-w-[760px] mx-auto" style={{ color: 'var(--muted)' }}>
+            From experimentation to real-world impact in AI-led healthcare.
           </p>
+        </motion.div>
+
+        {/* Pillars grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {pillars.map((pillar, index) => (
+            <motion.div
+              key={index}
+              className="group relative rounded-3xl p-6 md:p-8 transition-all duration-300"
+              style={{
+                background: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.14)',
+                backdropFilter: 'blur(10px)',
+              }}
+              initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              whileHover={{
+                y: -4,
+                borderColor: 'rgba(255, 255, 255, 0.24)',
+                boxShadow: '0 0 40px rgba(0, 166, 81, 0.15)',
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Green accent strip on left */}
+              <div
+                className="absolute left-0 top-6 bottom-6 w-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ background: 'var(--accent)' }}
+              />
+
+              {/* Inner highlight gradient */}
+              <div
+                className="absolute inset-x-0 top-0 h-20 rounded-t-3xl opacity-30 pointer-events-none"
+                style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 100%)' }}
+              />
+
+              <div className="relative z-10">
+                {/* Icon */}
+                <div
+                  className="mb-6 transition-colors duration-300 group-hover:text-accent"
+                  style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                >
+                  {pillar.icon}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-xl md:text-2xl font-bold mb-3" style={{ color: 'var(--text)' }}>
+                  {pillar.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm md:text-base leading-relaxed mb-4" style={{ color: 'var(--muted)' }}>
+                  {pillar.description}
+                </p>
+
+                {/* Keywords */}
+                <div className="text-xs uppercase tracking-wider" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
+                  {pillar.keywords}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </motion.div>
+      </div>
     </Section>
   )
 }

@@ -469,7 +469,7 @@ function LogoCarousel() {
             <img
               src={logo.src}
               alt={logo.name}
-              className="h-12 object-contain emitka scale-130 hover:scale-150 transition-all duration-400"
+              className="h-12 object-contain emitka scale-130 hover:scale-150 duration-700 transition"
             />
           </div>
         ))}
@@ -612,7 +612,8 @@ function ScrollRevealLine({ children }) {
       ref={lineRef}
       className="inline-block"
       style={{
-        background: `linear-gradient(to right, #ffffff 0%, #d1d5db var(--fill, 0%), #6b7280 100%)`,
+        // background: `linear-gradient(to right, #6b7280 0%, #fff var(--fill, 0%), #6b7280 100%)`,
+        background: `linear-gradient(to right, #ffffff var(--fill, 0%), #6b7280 var(--fill, 0%), #6b7280 100%)`,
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
@@ -628,7 +629,7 @@ function About() {
   const pills = ['Policy Makers', 'Hospital Leaders', 'AI Startups']
 
   return (
-    <Section id="about" className="py-12 md:py-16 bai text-center">
+    <Section id="about" className="py-8 md:py-16 lg:py-6 bai text-center">
       <div className="flex gap-8 md:gap-12 items-center text-center px-4 md:px-12 lg:px-48">
         <motion.div
           className="w-full"
@@ -652,7 +653,7 @@ function About() {
             {pills.map((pill, index) => (
               <motion.div
                 key={index}
-                className="glass px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base"
+                className="glass px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base bai"
                 style={{ color: 'var(--accent)' }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -708,7 +709,7 @@ function Stats() {
   }, [isInView])
 
   return (
-    <Section id="stats" className="py-0">
+    <Section id="stats" className="py-12">
       <motion.div
         ref={statsRef}
         className="grid grid-cols-1 md:grid-cols-3 gap-0"
@@ -726,7 +727,7 @@ function Stats() {
                 ? 'linear-gradient(135deg, #333 0%, #aaa 100%)'
                 : index === 1
                 ? 'linear-gradient(135deg, #5176ff 0%, #00000040 100%)'
-                : 'linear-gradient(135deg, #333 0%, #aaa 100%)',
+                : 'linear-gradient(135deg, #aaa 0%, #333 100%)',
               borderRight: index < 2 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
               backdropFilter: 'blur(50px)',
             }}
@@ -829,7 +830,7 @@ function Theme() {
   ]
 
   return (
-    <Section id="theme" className="py-32 relative overflow-hidden">
+    <Section id="theme" className="py-16 relative overflow-hidden bai bg-gradient-the">
       {/* Subtle mesh overlay - right side */}
       <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none z-0 opacity-[0.06]">
         <svg
@@ -856,17 +857,12 @@ function Theme() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>
-              THEME
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6" style={{ color: 'var(--text)' }}>
+          <ScrollRevealText className="text-4xl md:text-5xl lg:text-6xl font-black mb-6" style={{ color: 'var(--text)' }}>
             The Theme
-          </h2>
-          <p className="text-lg md:text-xl max-w-[760px] mx-auto" style={{ color: 'var(--muted)' }}>
+          </ScrollRevealText>
+          <ScrollRevealText className="text-lg md:text-2xl max-w-[760px] mx-auto" style={{ color: 'var(--muted)' }}>
             From experimentation to real-world impact in AI-led healthcare.
-          </p>
+          </ScrollRevealText>
         </motion.div>
 
         {/* Pillars grid */}
@@ -874,32 +870,27 @@ function Theme() {
           {pillars.map((pillar, index) => (
             <motion.div
               key={index}
-              className="group relative rounded-3xl p-6 md:p-8 transition-all duration-300"
+              className="group relative rounded-3xl p-6 md:p-8 transition-all duration-300 cursor-default"
               style={{
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.14)',
+                background: '#fffff80',
+                border: '1px solid #fff',
                 backdropFilter: 'blur(10px)',
               }}
               initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{
-                duration: 0.8,
+                duration: 0.2,
                 delay: index * 0.1,
                 ease: [0.22, 1, 0.36, 1]
               }}
               whileHover={{
                 y: -4,
-                borderColor: 'rgba(255, 255, 255, 0.24)',
-                boxShadow: '0 0 40px rgba(0, 166, 81, 0.15)',
-                transition: { duration: 0.3 }
+                borderColor: '#ddd',
+                boxShadow: '0 0 10px #fff',
+                transition: { duration: 0.1 }
               }}
             >
-              {/* Green accent strip on left */}
-              <div
-                className="absolute left-0 top-6 bottom-6 w-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ background: 'var(--accent)' }}
-              />
 
               {/* Inner highlight gradient */}
               <div
@@ -960,7 +951,7 @@ function Why() {
   ]
 
   return (
-    <Section id="why" className="py-32">
+    <Section id="why" className="py-8 bg-gradient-why bai">
       <motion.div
         className="max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
@@ -968,9 +959,9 @@ function Why() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
+        <ScrollRevealText className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
           Why Attend
-        </h2>
+        </ScrollRevealText>
         <div className="grid md:grid-cols-2 gap-6">
           {reasons.map((reason, index) => (
             <motion.div

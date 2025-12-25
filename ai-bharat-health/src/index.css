@@ -219,6 +219,15 @@
   font-style: normal;
 }
 
+.bg-gradient-the {
+    background: linear-gradient(180deg, #071429 0%, #17253c 100%);
+  }
+
+.bg-gradient-why {
+    background: linear-gradient(180deg, #17253c 0%, #200c5d 100%);
+  }
+
+
   .box-sh {
     background: #fafafa22;
 box-shadow: inset 1px 1px 0 -.5px #333, inset -1px -1px 0 -.5px #262626, inset 1px 1px .5px -1px #fff, inset -1px -1px .5px -1px #fff, inset 0 0 3px #ffffff80, inset 0 0 11px #f2f2f2;

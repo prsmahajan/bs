@@ -958,7 +958,7 @@ function Why() {
   }
 
   return (
-    <Section id="why" className="py-8 bg-gradient-why bai">
+    <Section id="why" className="py-12 bg-gradient-why bai">
       <motion.div
         className="max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
@@ -1004,12 +1004,12 @@ function Why() {
 
                 {/* Text overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
+                  <ScrollRevealText className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
                     {video.title}
-                  </h3>
-                  <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                  </ScrollRevealText>
+                  <ScrollRevealText className="text-sm" style={{ color: 'var(--muted)' }}>
                     {video.description}
-                  </p>
+                  </ScrollRevealText>
                 </div>
               </div>
             </motion.div>

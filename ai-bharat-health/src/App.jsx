@@ -675,9 +675,9 @@ function Stats() {
   const statsRef = useRef(null)
 
   const stats = [
-    { number: 500, suffix: '+', label: 'Healthcare leaders attending in-person' },
+    { number: 350, suffix: '+', label: 'Healthcare leaders attending in-person' },
     { number: 25, suffix: '+', label: 'Legendary tech speakers' },
-    { number: 15, suffix: '+', label: 'Deep-dive sessions on tech' },
+    { number: 6, suffix: '+', label: 'Deep-dive sessions on tech' },
   ]
 
   useEffect(() => {
@@ -723,11 +723,12 @@ function Stats() {
             className="relative p-8 md:p-12"
             style={{
               background: index === 0
-                ? 'linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(101, 67, 33, 0.2) 100%)'
+                ? 'linear-gradient(135deg, #333 0%, #aaa 100%)'
                 : index === 1
-                ? 'rgba(0, 0, 0, 0.4)'
-                : 'rgba(101, 67, 33, 0.2)',
+                ? 'linear-gradient(135deg, #5176ff 0%, #00000040 100%)'
+                : 'linear-gradient(135deg, #333 0%, #aaa 100%)',
               borderRight: index < 2 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
+              backdropFilter: 'blur(50px)',
             }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -740,7 +741,7 @@ function Stats() {
           >
             {/* Gradient glow on hover */}
             <motion.div
-              className="absolute inset-0 opacity-0 hover:opacity-20 transition-opacity duration-500"
+              className="absolute inset-0 opacity-0 hover:opacity-20 transition-opacity duration-500 text-[#5176ff]"
               style={{
                 background: 'radial-gradient(circle at center, var(--accent) 0%, transparent 70%)',
               }}

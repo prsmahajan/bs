@@ -1021,7 +1021,7 @@ function Why() {
 }
 
 function Expect() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const scrollRef = useRef(null)
 
   const expectations = [
     {
@@ -1056,15 +1056,14 @@ function Expect() {
     }
   ]
 
-  const cardsPerView = 3 // Show 3 cards at a time
-  const maxIndex = Math.max(0, expectations.length - cardsPerView)
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1))
-  }
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1))
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 350 // Width of card + gap
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
@@ -1079,22 +1078,19 @@ function Expect() {
           What to Expect
         </h2>
 
-        <div className="relative max-w-6xl mx-auto">
-          {/* Carousel Container */}
-          <div className="overflow-hidden">
-            <motion.div
-              className="flex gap-6"
-              animate={{
-                x: `calc(-${currentIndex * (100 / cardsPerView)}% - ${currentIndex * 1.5}rem)`
-              }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
+        <div className="relative">
+          {/* Scrollable Container */}
+          <div
+            ref={scrollRef}
+            className="overflow-x-auto py-4 hide-scrollbar"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            <div className="flex gap-6 px-4">
               {expectations.map((item, index) => (
                 <motion.div
                   key={index}
-                  className="glass-strong rounded-2xl p-6 flex-shrink-0 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="glass-strong rounded-2xl p-6 min-w-[320px] max-w-[320px] hover:scale-105 transition-all duration-300 cursor-pointer flex-shrink-0"
                   style={{
-                    width: `calc(${100 / cardsPerView}% - ${(cardsPerView - 1) * 1.5 / cardsPerView}rem)`,
                     background: 'rgba(255, 255, 255, 0.08)',
                     border: '1px solid rgba(255, 255, 255, 0.15)',
                     backdropFilter: 'blur(10px)'
@@ -1119,52 +1115,35 @@ function Expect() {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-center gap-4 mt-8">
             <motion.button
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              className="glass-strong rounded-full p-4 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+              onClick={() => scroll('left')}
+              className="glass-strong rounded-full p-4 transition-all duration-300"
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
               }}
-              whileHover={currentIndex !== 0 ? { scale: 1.1 } : {}}
-              whileTap={currentIndex !== 0 ? { scale: 0.95 } : {}}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </motion.button>
 
-            {/* Progress Dots */}
-            <div className="flex gap-2">
-              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className="w-2 h-2 rounded-full transition-all duration-300"
-                  style={{
-                    background: currentIndex === index ? 'var(--accent)' : 'rgba(255, 255, 255, 0.3)',
-                    width: currentIndex === index ? '2rem' : '0.5rem'
-                  }}
-                />
-              ))}
-            </div>
-
             <motion.button
-              onClick={handleNext}
-              disabled={currentIndex === maxIndex}
-              className="glass-strong rounded-full p-4 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+              onClick={() => scroll('right')}
+              className="glass-strong rounded-full p-4 transition-all duration-300"
               style={{
                 background: 'rgba(255, 255, 255, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
               }}
-              whileHover={currentIndex !== maxIndex ? { scale: 1.1 } : {}}
-              whileTap={currentIndex !== maxIndex ? { scale: 0.95 } : {}}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

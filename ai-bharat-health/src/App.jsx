@@ -564,12 +564,7 @@ function ScrollRevealLine({ children }) {
       ref={lineRef}
       className="inline-block"
       style={{
-        background: `linear-gradient(to right,
-          #ffffff 0%,
-          #f3f4f6 calc(var(--fill, 0%) * 0.5),
-          #d1d5db var(--fill, 0%),
-          #9ca3af calc(var(--fill, 0%) + 2%),
-          #6b7280 100%)`,
+        background: `linear-gradient(to right, #ffffff 0%, #d1d5db var(--fill, 0%), #6b7280 100%)`,
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',

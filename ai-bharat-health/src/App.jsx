@@ -1021,21 +1021,42 @@ function Why() {
 }
 
 function Expect() {
-  const highlights = [
-    'Keynote speeches from AI and healthcare pioneers',
-    'Live demonstrations of AI diagnostic tools',
-    'Panel discussions on policy and ethics',
-    'Networking sessions with industry leaders',
-    'Startup pitch competition with investor panels',
-    'Hands-on AI workshops and masterclasses',
-    'Exhibition hall featuring latest health tech',
-    'One-on-one mentorship opportunities',
+  const expectations = [
+    {
+      icon: '🎤',
+      title: 'Keynote Speeches',
+      description: 'Hear from AI pioneers and healthcare leaders shaping the future'
+    },
+    {
+      icon: '🔬',
+      title: 'Live AI Demos',
+      description: 'Witness cutting-edge diagnostic tools in real-time action'
+    },
+    {
+      icon: '💡',
+      title: 'Policy Discussions',
+      description: 'Engage in critical conversations on AI ethics and governance'
+    },
+    {
+      icon: '🤝',
+      title: 'Network & Connect',
+      description: 'Build relationships with industry leaders and innovators'
+    },
+    {
+      icon: '🚀',
+      title: 'Startup Showcase',
+      description: 'Watch promising healthtech startups pitch to investors'
+    },
+    {
+      icon: '🎓',
+      title: 'Hands-on Workshops',
+      description: 'Master AI tools through interactive sessions and masterclasses'
+    }
   ]
 
   return (
-    <Section id="expect" className="py-32">
+    <Section id="expect" className="py-32 overflow-hidden">
       <motion.div
-        className="max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
@@ -1044,23 +1065,39 @@ function Expect() {
         <h2 className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
           What to Expect
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {highlights.map((item, index) => (
+
+        {/* Infinite Marquee */}
+        <Marquee speed={40} gradient={false} className="py-4">
+          {expectations.map((item, index) => (
             <motion.div
               key={index}
-              className="glass rounded-xl p-6 hover:border-accent/30 transition-all duration-300"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="glass-strong rounded-2xl p-6 mx-3 min-w-[320px] max-w-[320px] hover:scale-105 transition-all duration-300 cursor-pointer"
+              style={{
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                backdropFilter: 'blur(10px)'
+              }}
+              whileHover={{
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                boxShadow: '0 0 30px rgba(0, 166, 81, 0.2)'
+              }}
             >
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ background: 'var(--accent)' }} />
-                <p style={{ color: 'var(--text)' }}>{item}</p>
+              <div className="flex items-start gap-4">
+                <div className="text-4xl flex-shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                    {item.description}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}
-        </div>
+        </Marquee>
       </motion.div>
     </Section>
   )

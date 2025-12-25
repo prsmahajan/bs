@@ -35,6 +35,7 @@ function App() {
       <LogoCarousel />
       <About />
       <Stats />
+      <Venue />
       <Theme />
       <Why />
       <Expect />
@@ -779,6 +780,81 @@ function Stats() {
             </div>
           </motion.div>
         ))}
+      </motion.div>
+    </Section>
+  )
+}
+
+function Venue() {
+  return (
+    <Section id="venue" className="py-16 md:py-24 bg-gradient-to-b from-[#0a0f1e] to-[#050810]">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Top: Two-column text layout */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 mb-12 md:mb-16">
+          {/* Left: Main heading */}
+          <div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+              Join the premier cross-industry event for industry leaders{' '}
+              <span className="italic font-serif text-gradient-green">
+                driving AI innovation.
+              </span>
+            </h2>
+          </div>
+
+          {/* Right: Location info */}
+          <div className="flex items-center md:items-end md:justify-end">
+            <div className="text-right">
+              <p className="text-xl md:text-2xl lg:text-3xl font-light mb-2" style={{ color: 'var(--muted)' }}>
+                Set at Taj, MG Road,
+              </p>
+              <p className="text-xl md:text-2xl lg:text-3xl font-light" style={{ color: 'var(--muted)' }}>
+                Bengaluru – the Indian Capital
+              </p>
+              <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient-green mt-2">
+                of AI
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: Large venue image */}
+        <motion.div
+          className="relative rounded-3xl overflow-hidden"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="aspect-[21/9] bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+            {/* Placeholder - user will replace with actual image */}
+            <div className="text-center">
+              <svg
+                className="w-24 h-24 mx-auto mb-4 opacity-30"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <p className="text-gray-500 text-sm">
+                [Venue Image Placeholder - Add your Taj/Bengaluru image here]
+              </p>
+            </div>
+          </div>
+
+          {/* Optional overlay gradient for depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+        </motion.div>
       </motion.div>
     </Section>
   )

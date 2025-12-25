@@ -61,33 +61,30 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
     setMobileMenuOpen(false)
   }
 
-  // Track active section on scroll
+  // Track active section and scroll progress
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px', // Trigger when section is in middle of viewport
-      threshold: 0
-    }
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2
 
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+      // Find which section we're in
+      for (let i = 0; i < navLinks.length; i++) {
+        const section = document.getElementById(navLinks[i].id)
+        if (section) {
+          const sectionTop = section.offsetTop
+          const sectionBottom = sectionTop + section.offsetHeight
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            setActiveSection(navLinks[i].id)
+            break
+          }
         }
-      })
+      }
     }
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial check
 
-    // Observe all sections
-    navLinks.forEach((link) => {
-      const element = document.getElementById(link.id)
-      if (element) {
-        observer.observe(element)
-      }
-    })
-
-    return () => observer.disconnect()
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -117,25 +114,46 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
 
           {/* Center: Nav Links - Desktop */}
           <nav className="hidden xl:flex items-center gap-8 relative">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative text-md font-medium transition-colors group nav py-2"
-                style={{ color: activeSection === link.id ? 'var(--text)' : 'var(--muted)' }}
-              >
-                {link.label}
-                {/* Active indicator bar */}
-                {activeSection === link.id && (
-                  <motion.span
-                    layoutId="activeSection"
-                    className="absolute bottom-0 left-0 right-0 h-1"
-                    style={{ background: 'var(--accent)' }}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
+            {navLinks.map((link, index) => {
+              const isActive = activeSection === link.id
+              const activeIndex = navLinks.findIndex(l => l.id === activeSection)
+
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="relative text-md font-medium transition-colors nav py-2"
+                  style={{ color: isActive ? 'var(--text)' : 'var(--muted)' }}
+                >
+                  {link.label}
+
+                  {/* Progress bar connecting to next link */}
+                  {index === activeIndex && index < navLinks.length - 1 && (
+                    <motion.div
+                      className="absolute left-full top-1/2 h-[2px] -translate-y-1/2 ml-4"
+                      style={{
+                        background: 'var(--accent)',
+                        width: 'calc(2rem)', // Gap between items
+                        transformOrigin: 'left'
+                      }}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+
+                  {/* Active dot indicator */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeDot"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
+                      style={{ background: 'var(--accent)' }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              )
+            })}
           </nav>
 
           {/* Right: CTAs */}

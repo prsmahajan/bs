@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import Marquee from 'react-fast-marquee'
+import CountUp from 'react-countup'
 import './App.css'
 
 function App() {
@@ -417,11 +418,17 @@ function LogoCarousel() {
   )
 }
 
-// Component for scroll-revealed text that automatically splits into ACTUAL rendered lines
+// Component for scroll-revealed text that reveals LINE BY LINE sequentially
 function ScrollRevealText({ children, className = "", as = "div" }) {
   const [lines, setLines] = useState([])
   const containerRef = useRef(null)
   const Component = as
+
+  // Track scroll progress for the entire container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.8", "end 0.4"]
+  })
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -518,7 +525,14 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
     <Component ref={containerRef} className={className}>
       {lines.length > 0 ? (
         lines.map((line, index) => (
-          <ScrollRevealLine key={index}>{line} </ScrollRevealLine>
+          <ScrollRevealLine
+            key={index}
+            lineIndex={index}
+            totalLines={lines.length}
+            scrollProgress={scrollYProgress}
+          >
+            {line}{' '}
+          </ScrollRevealLine>
         ))
       ) : (
         <span style={{ opacity: 0 }}>{children}</span>
@@ -527,25 +541,31 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
   )
 }
 
-// Individual line component with scroll reveal
-function ScrollRevealLine({ children }) {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.9", "end 0.6"]
-  })
-  const fillProgress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+// Individual line component - reveals sequentially based on lineIndex
+function ScrollRevealLine({ children, lineIndex, totalLines, scrollProgress }) {
+  // Calculate when this line should start and finish revealing
+  // Line 0: 0.0 to 0.33 (if 3 lines)
+  // Line 1: 0.33 to 0.66
+  // Line 2: 0.66 to 1.0
+  const startProgress = lineIndex / totalLines
+  const endProgress = (lineIndex + 1) / totalLines
+
+  // Map overall scroll to this line's individual progress
+  const lineFillProgress = useTransform(
+    scrollProgress,
+    [startProgress, endProgress],
+    ["0%", "100%"]
+  )
 
   return (
     <motion.span
-      ref={ref}
       className="inline-block"
       style={{
         background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill, 0%), #6b7280 var(--fill, 0%), #6b7280 100%)`,
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
-        '--fill': fillProgress
+        '--fill': lineFillProgress
       }}
     >
       {children}
@@ -600,15 +620,40 @@ function About() {
 }
 
 function Stats() {
+  const [isInView, setIsInView] = useState(false)
+  const statsRef = useRef(null)
+
   const stats = [
-    { number: '500+', label: 'Healthcare leaders attending in-person' },
-    { number: '25+', label: 'Legendary tech speakers' },
-    { number: '15+', label: 'Deep-dive sessions on tech' },
+    { number: 500, suffix: '+', label: 'Healthcare leaders attending in-person' },
+    { number: 25, suffix: '+', label: 'Legendary tech speakers' },
+    { number: 15, suffix: '+', label: 'Deep-dive sessions on tech' },
   ]
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current)
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current)
+      }
+    }
+  }, [])
 
   return (
     <Section id="stats" className="py-0">
       <motion.div
+        ref={statsRef}
         className="grid grid-cols-1 md:grid-cols-3 gap-0"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -653,7 +698,21 @@ function Stats() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.2 + 0.2 }}
               >
-                {stat.number}
+                {isInView ? (
+                  <>
+                    <CountUp
+                      start={0}
+                      end={stat.number}
+                      duration={2.5}
+                      delay={index * 0.2}
+                      useEasing={true}
+                      separator=","
+                    />
+                    {stat.suffix}
+                  </>
+                ) : (
+                  `0${stat.suffix}`
+                )}
               </motion.h3>
               <p className="text-sm md:text-base lg:text-lg jakarta" style={{ color: '#d1d5db' }}>
                 {stat.label}

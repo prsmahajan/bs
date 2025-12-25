@@ -1056,13 +1056,34 @@ function Expect() {
     }
   ]
 
+  // Duplicate cards for seamless infinite scroll
+  const duplicatedExpectations = [...expectations, ...expectations]
+
   const scroll = (direction) => {
     if (scrollRef.current) {
       const scrollAmount = 350 // Width of card + gap
+
       scrollRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       })
+
+      // Check position after scroll animation completes
+      setTimeout(() => {
+        if (scrollRef.current) {
+          const maxScroll = scrollRef.current.scrollWidth / 2 // Half because duplicated
+          const currentScroll = scrollRef.current.scrollLeft
+
+          // If scrolled past the original set, reset to beginning
+          if (currentScroll >= maxScroll) {
+            scrollRef.current.scrollLeft = 0
+          }
+          // If scrolled before the beginning, jump to end of original set
+          else if (currentScroll <= 0) {
+            scrollRef.current.scrollLeft = maxScroll - scrollRef.current.clientWidth
+          }
+        }
+      }, 500) // Wait for smooth scroll to complete
     }
   }
 
@@ -1086,7 +1107,7 @@ function Expect() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             <div className="flex gap-6 px-4">
-              {expectations.map((item, index) => (
+              {duplicatedExpectations.map((item, index) => (
                 <motion.div
                   key={index}
                   className="glass-strong rounded-2xl p-6 min-w-[320px] max-w-[320px] hover:scale-105 transition-all duration-300 cursor-pointer flex-shrink-0"

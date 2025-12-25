@@ -343,6 +343,32 @@ function LogoCarousel() {
   )
 }
 
+// Component for scroll-revealed text line
+function ScrollRevealText({ children, className = "" }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.9", "end 0.6"]
+  })
+  const fillProgress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+
+  return (
+    <motion.span
+      ref={ref}
+      className={`inline-block ${className}`}
+      style={{
+        background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill, 0%), #6b7280 var(--fill, 0%), #6b7280 100%)`,
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        '--fill': fillProgress
+      }}
+    >
+      {children}
+    </motion.span>
+  )
+}
+
 function About() {
   const pills = ['Policy Makers', 'Hospital Leaders', 'AI Startups']
   const keyPoints = [
@@ -350,53 +376,6 @@ function About() {
     'Real-world AI implementation cases',
     'Live AI Diagnosis Showdown competition'
   ]
-
-  const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const whyTitleRef = useRef(null)
-  const para1Ref = useRef(null)
-  const para2Ref = useRef(null)
-  const para3Ref = useRef(null)
-
-  // Scroll tracking for title
-  const { scrollYProgress: titleProgress } = useScroll({
-    target: titleRef,
-    offset: ["start end", "end start"]
-  })
-  const titleFill = useTransform(titleProgress, [0.2, 0.8], ["0%", "100%"])
-
-  // Scroll tracking for subtitle
-  const { scrollYProgress: subtitleProgress } = useScroll({
-    target: subtitleRef,
-    offset: ["start end", "end start"]
-  })
-  const subtitleFill = useTransform(subtitleProgress, [0.2, 0.8], ["0%", "100%"])
-
-  // Scroll tracking for why title
-  const { scrollYProgress: whyTitleProgress } = useScroll({
-    target: whyTitleRef,
-    offset: ["start end", "end start"]
-  })
-  const whyTitleFill = useTransform(whyTitleProgress, [0.2, 0.8], ["0%", "100%"])
-
-  // Scroll tracking for paragraphs
-  const { scrollYProgress: para1Progress } = useScroll({
-    target: para1Ref,
-    offset: ["start end", "end start"]
-  })
-  const para1Fill = useTransform(para1Progress, [0.2, 0.8], ["0%", "100%"])
-
-  const { scrollYProgress: para2Progress } = useScroll({
-    target: para2Ref,
-    offset: ["start end", "end start"]
-  })
-  const para2Fill = useTransform(para2Progress, [0.2, 0.8], ["0%", "100%"])
-
-  const { scrollYProgress: para3Progress } = useScroll({
-    target: para3Ref,
-    offset: ["start end", "end start"]
-  })
-  const para3Fill = useTransform(para3Progress, [0.2, 0.8], ["0%", "100%"])
 
   return (
     <Section id="about" className="py-32">
@@ -410,90 +389,38 @@ function About() {
           transition={{ duration: 0.8 }}
         >
           {/* Title with scroll reveal */}
-          <motion.h2
-            ref={titleRef}
-            className="text-[60px] font-bold mb-8 jakarta"
-            style={{
-              background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              '--fill-progress': titleFill
-            }}
-          >
-            ABOUT THE EVENT
-          </motion.h2>
+          <h2 className="text-[60px] font-bold mb-8 jakarta">
+            <ScrollRevealText>ABOUT THE EVENT</ScrollRevealText>
+          </h2>
 
-          {/* Subtitle with scroll reveal */}
-          <motion.p
-            ref={subtitleRef}
-            className="text-[35px] leading-tight mb-12 jakarta"
-            style={{
-              background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              '--fill-progress': subtitleFill
-            }}
-          >
-            AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, bringing together policymakers, hospital leaders, researchers, startups, and global technology providers to shape the future of AI-led healthcare delivery.
-          </motion.p>
+          {/* Subtitle with scroll reveal - line by line */}
+          <div className="text-[35px] leading-tight mb-12 jakarta">
+            <ScrollRevealText>AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, </ScrollRevealText>
+            <ScrollRevealText>bringing together policymakers, hospital leaders, researchers, startups, </ScrollRevealText>
+            <ScrollRevealText>and global technology providers to shape the future of AI-led healthcare delivery.</ScrollRevealText>
+          </div>
 
           {/* Why this mission matters with scroll reveal */}
-          <motion.h3
-            ref={whyTitleRef}
-            className="text-3xl font-bold mb-6 jakarta"
-            style={{
-              background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              '--fill-progress': whyTitleFill
-            }}
-          >
-            Why this mission matters
-          </motion.h3>
+          <h3 className="text-3xl font-bold mb-6 jakarta">
+            <ScrollRevealText>Why this mission matters</ScrollRevealText>
+          </h3>
 
           <div className="space-y-6 mb-8">
-            <motion.p
-              ref={para1Ref}
-              className="text-lg leading-relaxed jakarta"
-              style={{
-                background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                '--fill-progress': para1Fill
-              }}
-            >
-              India's healthcare system faces unprecedented challenges—1.4 billion people, limited infrastructure, and a severe shortage of medical professionals. Traditional approaches alone cannot bridge this gap.
-            </motion.p>
-            <motion.p
-              ref={para2Ref}
-              className="text-lg leading-relaxed jakarta"
-              style={{
-                background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                '--fill-progress': para2Fill
-              }}
-            >
-              AI technology has matured to a point where it can diagnose diseases, predict outcomes, and personalize treatment at scale. The timing is perfect to deploy these solutions across India's diverse healthcare landscape.
-            </motion.p>
-            <motion.p
-              ref={para3Ref}
-              className="text-lg leading-relaxed jakarta"
-              style={{
-                background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill-progress, 0%), #6b7280 var(--fill-progress, 0%), #6b7280 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                '--fill-progress': para3Fill
-              }}
-            >
-              Success requires collaboration between government, hospitals, technology providers, and researchers. This mission creates the platform where these stakeholders can align, partner, and accelerate AI adoption in healthcare.
-            </motion.p>
+            <p className="text-lg leading-relaxed jakarta">
+              <ScrollRevealText>India's healthcare system faces unprecedented challenges—1.4 billion people, </ScrollRevealText>
+              <ScrollRevealText>limited infrastructure, and a severe shortage of medical professionals. </ScrollRevealText>
+              <ScrollRevealText>Traditional approaches alone cannot bridge this gap.</ScrollRevealText>
+            </p>
+            <p className="text-lg leading-relaxed jakarta">
+              <ScrollRevealText>AI technology has matured to a point where it can diagnose diseases, </ScrollRevealText>
+              <ScrollRevealText>predict outcomes, and personalize treatment at scale. The timing is perfect </ScrollRevealText>
+              <ScrollRevealText>to deploy these solutions across India's diverse healthcare landscape.</ScrollRevealText>
+            </p>
+            <p className="text-lg leading-relaxed jakarta">
+              <ScrollRevealText>Success requires collaboration between government, hospitals, technology providers, </ScrollRevealText>
+              <ScrollRevealText>and researchers. This mission creates the platform where these stakeholders </ScrollRevealText>
+              <ScrollRevealText>can align, partner, and accelerate AI adoption in healthcare.</ScrollRevealText>
+            </p>
           </div>
 
           {/* Pills */}

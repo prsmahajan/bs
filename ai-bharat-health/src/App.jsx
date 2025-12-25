@@ -8,6 +8,9 @@ function App() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  // Track scroll progress for progress bar
+  const { scrollYProgress } = useScroll()
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 24)
@@ -18,6 +21,15 @@ function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(180deg, #071225 0%, #0B1B3A 100%)' }}>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] z-[100] origin-left"
+        style={{
+          scaleX: scrollYProgress,
+          background: 'linear-gradient(to right, #ffffff 0%, #9ca3af 100%)',
+        }}
+      />
+
       <Header scrolled={scrolled} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <Hero />
       <LogoCarousel />

@@ -436,10 +436,10 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
   const containerRef = useRef(null)
   const Component = as
 
-  // Track scroll progress for the entire container - LONGER range for slower reveal
+  // Track scroll progress for the entire container - TIGHT range for clear sequential reveal
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.9", "end 0.2"]  // Much larger range for smoother sequential reveal
+    offset: ["start 0.7", "end 0.3"]  // Tighter range for more controlled reveal
   })
 
   useEffect(() => {
@@ -555,15 +555,10 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
 
 // Individual line component - reveals sequentially based on lineIndex
 function ScrollRevealLine({ children, lineIndex, totalLines, scrollProgress }) {
-  // Calculate when this line should start and finish revealing
-  // With overlap for smoother transitions but still sequential
-  // Line 0: 0.0 to 0.4 (if 3 lines)
-  // Line 1: 0.3 to 0.7
-  // Line 2: 0.6 to 1.0
-  const overlap = 0.1 // Small overlap for smoothness
-  const lineWidth = 1 / totalLines + overlap
-  const startProgress = Math.max(0, (lineIndex / totalLines) - overlap)
-  const endProgress = Math.min(1, startProgress + lineWidth)
+  // PURE SEQUENTIAL: Each line gets equal slice of scroll progress
+  // 3 lines: Line 0: 0-0.33, Line 1: 0.33-0.66, Line 2: 0.66-1.0
+  const startProgress = lineIndex / totalLines
+  const endProgress = (lineIndex + 1) / totalLines
 
   // Map overall scroll to this line's individual progress
   const lineFillProgress = useTransform(

@@ -48,6 +48,7 @@ function App() {
 
 function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
   const [activeSection, setActiveSection] = useState('about')
+  const [sectionProgress, setSectionProgress] = useState(0)
 
   const navLinks = [
     { label: 'About event', href: '#about', id: 'about' },
@@ -61,12 +62,12 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
     setMobileMenuOpen(false)
   }
 
-  // Track active section and scroll progress
+  // Track active section and scroll progress within section
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 2
 
-      // Find which section we're in
+      // Find which section we're in and calculate progress
       for (let i = 0; i < navLinks.length; i++) {
         const section = document.getElementById(navLinks[i].id)
         if (section) {
@@ -75,6 +76,10 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
 
           if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
             setActiveSection(navLinks[i].id)
+
+            // Calculate progress through this section (0 to 1)
+            const progress = (scrollPosition - sectionTop) / (sectionBottom - sectionTop)
+            setSectionProgress(Math.min(Math.max(progress, 0), 1))
             break
           }
         }
@@ -127,18 +132,18 @@ function Header({ scrolled, mobileMenuOpen, setMobileMenuOpen }) {
                 >
                   {link.label}
 
-                  {/* Progress bar connecting to next link */}
+                  {/* Progress bar showing section completion - grows from current to next link */}
                   {index === activeIndex && index < navLinks.length - 1 && (
                     <motion.div
                       className="absolute left-full top-1/2 h-[2px] -translate-y-1/2 ml-4"
                       style={{
                         background: 'var(--accent)',
-                        width: 'calc(2rem)', // Gap between items
                         transformOrigin: 'left'
                       }}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.3 }}
+                      animate={{
+                        width: `calc(2rem * ${sectionProgress})`
+                      }}
+                      transition={{ duration: 0.1, ease: 'linear' }}
                     />
                   )}
 

@@ -931,24 +931,31 @@ function Theme() {
 }
 
 function Why() {
-  const reasons = [
+  const videos = [
     {
+      src: '/networking.mp4',
       title: 'Network with Leaders',
-      description: 'Connect with top AI researchers, healthcare innovators, and policy makers shaping the future of health tech.',
+      description: 'Connect with healthcare innovators and policy makers',
     },
     {
-      title: 'Learn from Experts',
-      description: 'Gain insights from keynotes, workshops, and hands-on sessions led by industry pioneers.',
+      src: '/aihealth.mp4',
+      title: 'AI-Powered Healthcare',
+      description: 'Experience cutting-edge health technology',
     },
     {
-      title: 'Showcase Innovation',
-      description: 'Present your AI healthcare solutions to industry leaders, investors, and potential partners.',
-    },
-    {
-      title: 'Shape the Future',
-      description: 'Contribute to the national conversation on AI in healthcare and influence policy direction.',
+      src: '/close.mp4',
+      title: 'Close Collaboration',
+      description: 'Build partnerships that transform healthcare',
     },
   ]
+
+  const handleVideoHover = (e, play) => {
+    if (play) {
+      e.currentTarget.play()
+    } else {
+      e.currentTarget.pause()
+    }
+  }
 
   return (
     <Section id="why" className="py-8 bg-gradient-why bai">
@@ -962,24 +969,49 @@ function Why() {
         <ScrollRevealText className="text-5xl md:text-6xl font-black mb-16 text-center" style={{ color: 'var(--text)' }}>
           Why Attend
         </ScrollRevealText>
-        <div className="grid md:grid-cols-2 gap-6">
-          {reasons.map((reason, index) => (
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {videos.map((video, index) => (
             <motion.div
               key={index}
-              className="glass rounded-2xl p-8 hover:glass-strong transition-all duration-300 group"
+              className="group relative rounded-2xl overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -4 }}
             >
-              <div className="w-12 h-1 bg-gradient-to-r from-accent to-accent2 rounded-full mb-6" />
-              <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--text)' }}>
-                {reason.title}
-              </h3>
-              <p className="leading-relaxed" style={{ color: 'var(--muted)' }}>
-                {reason.description}
-              </p>
+              <div className="relative aspect-[9/16] bg-black/20">
+                <video
+                  ref={(el) => {
+                    if (el) {
+                      el.muted = true
+                      el.playsInline = true
+                      el.loop = true
+                    }
+                  }}
+                  onMouseEnter={(e) => handleVideoHover(e, true)}
+                  onMouseLeave={(e) => handleVideoHover(e, false)}
+                  className="w-full h-full object-cover"
+                  muted
+                  playsInline
+                  loop
+                >
+                  <source src={video.src} type="video/mp4" />
+                </video>
+
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Text overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+                  <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
+                    {video.title}
+                  </h3>
+                  <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                    {video.description}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

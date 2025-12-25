@@ -600,9 +600,9 @@ function About() {
           </ScrollRevealText>
 
           {/* Subtitle with scroll reveal - automatically detects rendered lines! */}
-          <ScrollRevealText className="text-[40px] md:text-[50px] lg:text-[60px] leading-tight mb-8 md:mb-12 text-center">
+          <div className="text-[15px] md:text-[25px] lg:text-[35px] leading-tight mb-8 md:mb-12 text-justify">
             AI Bharat Health Mission 2026 is India's premier healthcare AI gathering, bringing together policymakers, hospital leaders, researchers, startups, and global technology providers to shape the future of AI-led healthcare delivery.
-          </ScrollRevealText>
+          </div>
 
           {/* Pills */}
           <div className="flex flex-wrap gap-3 justify-center">

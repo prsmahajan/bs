@@ -436,12 +436,6 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
   const containerRef = useRef(null)
   const Component = as
 
-  // Track scroll progress for the entire container - TIGHT range for clear sequential reveal
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 0.7", "end 0.3"]  // Tighter range for more controlled reveal
-  })
-
   useEffect(() => {
     if (!containerRef.current) return
 
@@ -537,12 +531,7 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
     <Component ref={containerRef} className={className}>
       {lines.length > 0 ? (
         lines.map((line, index) => (
-          <ScrollRevealLine
-            key={index}
-            lineIndex={index}
-            totalLines={lines.length}
-            scrollProgress={scrollYProgress}
-          >
+          <ScrollRevealLine key={index}>
             {line}{' '}
           </ScrollRevealLine>
         ))
@@ -553,22 +542,26 @@ function ScrollRevealText({ children, className = "", as = "div" }) {
   )
 }
 
-// Individual line component - reveals sequentially based on lineIndex
-function ScrollRevealLine({ children, lineIndex, totalLines, scrollProgress }) {
-  // PURE SEQUENTIAL: Each line gets equal slice of scroll progress
-  // 3 lines: Line 0: 0-0.33, Line 1: 0.33-0.66, Line 2: 0.66-1.0
-  const startProgress = lineIndex / totalLines
-  const endProgress = (lineIndex + 1) / totalLines
+// Individual line component - each line has its own independent scroll trigger
+function ScrollRevealLine({ children }) {
+  const lineRef = useRef(null)
 
-  // Map overall scroll to this line's individual progress
+  // Each line tracks its OWN scroll position independently
+  const { scrollYProgress } = useScroll({
+    target: lineRef,
+    offset: ["start 0.75", "start 0.45"]  // Tight range: starts when line is at 75% viewport, completes at 45%
+  })
+
+  // Map scroll progress to fill percentage
   const lineFillProgress = useTransform(
-    scrollProgress,
-    [startProgress, endProgress],
+    scrollYProgress,
+    [0, 1],
     ["0%", "100%"]
   )
 
   return (
     <motion.span
+      ref={lineRef}
       className="inline-block"
       style={{
         background: `linear-gradient(to right, #ffffff 0%, #ffffff var(--fill, 0%), #6b7280 var(--fill, 0%), #6b7280 100%)`,
